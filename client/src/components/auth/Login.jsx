@@ -7,9 +7,10 @@ import { server } from "../../server.js";
 import { toast } from "react-toastify";
 import store from "../../redux/store";
 import { loginUser } from "../../redux/actions/user";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Login = () => {
+  const { error, success } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
@@ -21,7 +22,10 @@ const Login = () => {
     const formData = { email, password };
 
     dispatch(loginUser(formData));
-    toast.success("Login Success!");
+    const { error, success } = useSelector((state) => state.user);
+    if (error) toast(error);
+    if (success) toast.success("Login Success!");
+
     navigate("/");
   };
 

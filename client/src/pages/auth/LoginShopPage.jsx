@@ -2,49 +2,61 @@ import { React, useEffect, useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import styles from "../../styles/styles";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import { server } from "../../server.js";
+// import axios from "axios";
+// import { server } from "../../server.js";
 import { toast } from "react-toastify";
-import store from "../../redux/store";
-import { loadSeller } from "../../redux/actions/user";
-import { useSelector } from "react-redux";
+// import store from "../../redux/store";
+import { loginSeller } from "../../redux/actions/user";
+import { useDispatch, useSelector } from "react-redux";
 
 const LoginShopPage = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
-  const { isSellerAuthenticated, seller, isLoading } = useSelector(
-    (state) => state.seller
-  );
+  const { success, error } = useSelector((state) => state.seller);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await axios
-      .post(`${server}/shop/login`, {
-        email,
-        password,
-      })
-      .then((res) => {
-        toast.success("Login Success!");
-        store.dispatch(loadSeller());
-        navigate("/dashboard");
+    const formData = { email, password };
+    dispatch(loginSeller(formData));
+    if (error) toast(error);
+    if (success) toast.success("Login Successfull!");
 
-        // window.location.reload();
-      })
-      .catch((err) => {
-        toast.error(err.response?.data?.message);
-        console.log(err.response?.data);
-      });
+    navigate("/dashboard");
+
+    // await axios
+    //   .post(`${server}/shop/login`, {
+    //     email,
+    //     password,
+    //   })
+    //   .then((res) => {
+    //     toast.success("Login Success!");
+    //     store.dispatch(loadSeller());
+    //     navigate("/dashboard");
+
+    //     // window.location.reload();
+    //   })
+    //   .catch((err) => {
+    //     toast.error(err.response?.data?.message);
+    //     console.log(err.response?.data);
+    //   });
   };
+  // const { isSellerAuthenticated } = useSelector((state) => state.seller);
 
-  useEffect(() => {
-    if (isSellerAuthenticated) {
-      navigate("/dashboard");
-      // navigate(`/shop/${seller._id}`);
-    }
-  }, [isSellerAuthenticated, seller, isLoading]);
+  // if (isSellerAuthenticated) {
+  //   // navigate("/dashboard");
+  //   navigate(`/dashboard`);
+  // }
+
+  // useEffect(() => {
+  //   if (isSellerAuthenticated) {
+  //     navigate("/dashboard");
+  //     // navigate(`/shop/${seller._id}`);
+  //   }
+  // }, [isSellerAuthenticated, seller, isLoading]);
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">

@@ -6,7 +6,8 @@ import { toast } from "react-toastify";
 import axios from "axios";
 
 const ShopInfo = ({ isOwner }) => {
-  const { seller } = useSelector((state) => state.seller);
+  const { user } = useSelector((state) => state.seller);
+  const seller = user;
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

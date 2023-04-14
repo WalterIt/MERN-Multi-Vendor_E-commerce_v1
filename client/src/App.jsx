@@ -13,16 +13,16 @@ import EventsPage from "./pages/EventsPage";
 import FAQPage from "./pages/FAQPage";
 import Layout from "./pages/Layout";
 import ProfilePage from "./pages/ProfilePage";
-// import CreateShopPage from "./pages/auth/CreateShopPage";
-// import LoginShopPage from "./pages/auth/LoginShopPage";
-// import ShopHomePage from "./pages/shop/ShopHomePage";
-// import ShopDashboardPage from "./pages/shop/ShopDashboardPage";
-// import ShopCreateProduct from "./pages/shop/ShopCreateProduct";
-// import ShopProducts from "./pages/shop/ShopProducts";
+import CreateShopPage from "./pages/auth/CreateShopPage";
+import LoginShopPage from "./pages/auth/LoginShopPage";
+import ShopHomePage from "./pages/shop/ShopHomePage";
+import ShopDashboardPage from "./pages/shop/ShopDashboardPage";
+import ShopCreateProduct from "./pages/shop/ShopCreateProduct";
+import ShopProducts from "./pages/shop/ShopProducts";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import ProtectedRoute from "./routes/ProtectedRoute";
-// import SellerProtectedRoute from "./routes/SellerProtectedRoute";
+import SellerProtectedRoute from "./routes/SellerProtectedRoute";
 
 axios.defaults.withCredentials = true;
 
@@ -64,7 +64,7 @@ function App() {
           />
         </Route>
         {/* SHOP ROUTES  */}
-        {/* <Route path="/create-shop" element={<CreateShopPage />} />
+        <Route path="/create-shop" element={<CreateShopPage />} />
         <Route path="/login-shop" element={<LoginShopPage />} />
 
         <Route
@@ -88,7 +88,7 @@ function App() {
             element={<ShopCreateProduct />}
           />
           <Route path="/dashboard/products" element={<ShopProducts />} />
-        </Route> */}
+        </Route>
       </Routes>
       <ToastContainer
         position="bottom-center"

@@ -47,17 +47,23 @@ export const loadUser = () => async (dispatch) => {
   }
 };
 
-// load Seller
-export const loadSeller = () => async (dispatch) => {
+// Login Seller
+export const loginSeller = (formData) => async (dispatch) => {
   try {
     dispatch({
       type: "LoadSellerRequest",
     });
-    const { data } = await axios.get(`${server}/shop/getseller`);
+    const { data } = await axios.post(`${server}/shop/login`, formData);
+    // clg(data);
+    dispatch({
+      type: "LoginSellerSuccess",
+      payload: data.user,
+    });
     dispatch({
       type: "LoadSellerSuccess",
       payload: data.seller,
     });
+    // console.log(data?.user);
   } catch (error) {
     dispatch({
       type: "LoadSellerFailure",

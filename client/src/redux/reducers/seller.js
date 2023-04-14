@@ -9,6 +9,10 @@ export const sellerReducer = createReducer(initialState, {
   LoadSellerRequest: (state) => {
     state.isLoading = true;
   },
+  LoginSellerSuccess: (state, action) => {
+    state.user = action.payload;
+  },
+
   LoadSellerSuccess: (state, action) => {
     state.isSellerAuthenticated = true;
     state.isLoading = false;
