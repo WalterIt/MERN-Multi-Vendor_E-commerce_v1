@@ -6,7 +6,7 @@ import axios from "axios";
 import { server } from "../../server.js";
 import { toast } from "react-toastify";
 import store from "../../redux/store";
-import { loadUser, logindUser } from "../../redux/actions/user";
+import { loginUser } from "../../redux/actions/user";
 import { useDispatch } from "react-redux";
 
 const Login = () => {
@@ -20,7 +20,8 @@ const Login = () => {
     e.preventDefault();
     const formData = { email, password };
 
-    dispatch(logindUser(formData));
+    dispatch(loginUser(formData));
+    toast.success("Login Success!");
     navigate("/");
   };
 

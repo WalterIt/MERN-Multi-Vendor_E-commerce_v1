@@ -2,7 +2,7 @@ import axios from "axios";
 import { server } from "../../server";
 
 // Login  user
-export const logindUser = (formData) => async (dispatch) => {
+export const loginUser = (formData) => async (dispatch) => {
   try {
     dispatch({
       type: "LoginUserRequest",
@@ -10,6 +10,10 @@ export const logindUser = (formData) => async (dispatch) => {
     const { data } = await axios.post(`${server}/user/login`, formData);
     dispatch({
       type: "LoginUserSuccess",
+      payload: data.user,
+    });
+    dispatch({
+      type: "LoadUserSuccess",
       payload: data.user,
     });
 
