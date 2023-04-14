@@ -125,11 +125,10 @@ router.post(
   "/login",
   catchAsyncErrors(async (req, res, next) => {
     try {
-      res.header("Access-Control-Allow-Origin", [
-        "http://localhost:3000",
-        "https://marketplace-7k38.onrender.com",
-        "https://vs-marketplace.vercel.app",
-      ]);
+      res.header(
+        "Access-Control-Allow-Origin",
+        "https://vs-marketplace.vercel.app"
+      );
       const { email } = req.body;
 
       if (!email || !req.body.password) {
@@ -163,11 +162,10 @@ router.get(
   isAuthenticated,
   catchAsyncErrors(async (req, res, next) => {
     try {
-      res.header("Access-Control-Allow-Origin", [
-        "http://localhost:3000",
-        "https://marketplace-7k38.onrender.com",
-        "https://vs-marketplace.vercel.app",
-      ]);
+      res.header(
+        "Access-Control-Allow-Origin",
+        "https://vs-marketplace.vercel.app"
+      );
       const user = await User.findById(req.user.id);
 
       if (!user) {
@@ -189,11 +187,10 @@ router.get(
   "/logout",
   catchAsyncErrors(async (req, res, next) => {
     try {
-      res.header("Access-Control-Allow-Origin", [
-        "http://localhost:3000",
-        "https://marketplace-7k38.onrender.com",
-        "https://vs-marketplace.vercel.app",
-      ]);
+      res.header(
+        "Access-Control-Allow-Origin",
+        "https://vs-marketplace.vercel.app"
+      );
       res.cookie("token", null, {
         expires: new Date(Date.now()),
         httpOnly: true,
