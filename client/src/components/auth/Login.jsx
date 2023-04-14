@@ -27,7 +27,7 @@ const Login = () => {
         store.dispatch(loadUser());
         navigate("/");
 
-        // window.location.reload();
+        window.location.reload();
       })
       .catch((err) => {
         toast.error(err.response?.data?.message);
