@@ -13,11 +13,6 @@ const { isAuthenticated } = require("../middleware/auth");
 
 router.post("/create-user", upload.single("file"), async (req, res, next) => {
   try {
-    res.header("Access-Control-Allow-Origin", [
-      "http://localhost:3000",
-      "https://marketplace-7k38.onrender.com",
-      "https://vs-marketplace.vercel.app",
-    ]);
     const { name, email, password, avatar } = req.body;
     const userEmail = await User.findOne({ email });
 
