@@ -13,6 +13,7 @@ const { isAuthenticated } = require("../middleware/auth");
 
 router.post("/create-user", upload.single("file"), async (req, res, next) => {
   try {
+    res.header("Access-Control-Allow-Origin", "*");
     const { name, email, password, avatar } = req.body;
     const userEmail = await User.findOne({ email });
 
@@ -120,6 +121,7 @@ router.post(
   "/login",
   catchAsyncErrors(async (req, res, next) => {
     try {
+      res.header("Access-Control-Allow-Origin", "*");
       const { email } = req.body;
 
       if (!email || !req.body.password) {
@@ -153,6 +155,7 @@ router.get(
   isAuthenticated,
   catchAsyncErrors(async (req, res, next) => {
     try {
+      res.header("Access-Control-Allow-Origin", "*");
       const user = await User.findById(req.user.id);
 
       if (!user) {
@@ -174,6 +177,7 @@ router.get(
   "/logout",
   catchAsyncErrors(async (req, res, next) => {
     try {
+      res.header("Access-Control-Allow-Origin", "*");
       res.cookie("token", null, {
         expires: new Date(Date.now()),
         httpOnly: true,
