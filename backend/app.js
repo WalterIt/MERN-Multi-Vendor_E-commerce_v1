@@ -28,9 +28,9 @@ const user = require("./controller/user");
 const shop = require("./controller/shop");
 const product = require("./controller/product");
 
-app.use("/user", user);
-app.use("/shop", shop);
-app.use("/product", product);
+app.use("/api/user", user);
+app.use("/api/shop", shop);
+app.use("/api/product", product);
 
 // it's for ErrorHandling
 app.use(ErrorHandler);
