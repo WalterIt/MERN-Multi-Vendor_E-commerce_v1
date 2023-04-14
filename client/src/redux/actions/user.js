@@ -1,6 +1,27 @@
 import axios from "axios";
 import { server } from "../../server";
 
+// Login  user
+export const logindUser = (formData) => async (dispatch) => {
+  try {
+    dispatch({
+      type: "LoginUserRequest",
+    });
+    const { data } = await axios.post(`${server}/user/login`, formData);
+    dispatch({
+      type: "LoginUserSuccess",
+      payload: data.user,
+    });
+
+    // console.log(data?.user);
+  } catch (error) {
+    dispatch({
+      type: "LoginUserFailure",
+      payload: error.response?.data?.message,
+    });
+  }
+};
+
 // load user
 export const loadUser = () => async (dispatch) => {
   try {
