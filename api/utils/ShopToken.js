@@ -1,15 +1,17 @@
 // create token and saving that in cookies
 const sendShopToken = (user, statusCode, res) => {
+  // Get the JWT token
   const token = user.getJwtToken();
 
-  // Options for cookies
-  const options = {
+  // Set cookie options
+  const cookieOptions = {
     expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000),
     httpOnly: true,
-    Secure: true,
+    secure: true,
   };
 
-  res.status(statusCode).cookie("SellerToken", token, options).json({
+  // Send the response
+  res.status(statusCode).cookie("SellerToken", token, cookieOptions).json({
     success: true,
     user,
     token,
