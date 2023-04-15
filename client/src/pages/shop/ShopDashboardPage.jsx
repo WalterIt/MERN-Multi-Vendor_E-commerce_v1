@@ -19,6 +19,12 @@ const ShopDashboardPage = () => {
       case "/dashboard/create-product":
         setActive(4);
         break;
+      case "/dashboard/events":
+        setActive(5);
+        break;
+      case "/dashboard/create-event":
+        setActive(6);
+        break;
       // case '/contact':
       //   // code to handle contact page
       //   break;

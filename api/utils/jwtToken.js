@@ -1,16 +1,15 @@
-const sendToken = (res, user, statusCode) => {
-  // Get the JWT token
+// create token and saving that in cookies
+const sendToken = (user, statusCode, res) => {
   const token = user.getJwtToken();
 
-  // Set cookie options
-  const cookieOptions = {
+  // Options for cookies
+  const options = {
     expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000),
     httpOnly: true,
-    secure: true,
+    Secure: true,
   };
 
-  // Send the response
-  res.status(statusCode).cookie("token", token, cookieOptions).json({
+  res.status(statusCode).cookie("token", token, options).json({
     success: true,
     user,
     token,

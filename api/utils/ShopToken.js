@@ -1,7 +1,17 @@
 // create token and saving that in cookies
+const jwt = require("jsonwebtoken");
+
 const sendShopToken = (user, statusCode, res) => {
-  // Get the JWT token
-  const token = user.getJwtToken();
+  // Create the JWT token
+  const payload = {
+    userId: user._id,
+    userEmail: user.email,
+    // add any other relevant data to the payload
+  };
+
+  const secretKey = process.env.JWT_SECRET_KEY;
+  const tokenOptions = { expiresIn: process.env.JWT_EXPIRES };
+  const token = jwt.sign(payload, secretKey, tokenOptions);
 
   // Set cookie options
   const cookieOptions = {

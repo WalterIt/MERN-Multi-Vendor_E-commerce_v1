@@ -1,34 +1,27 @@
 const express = require("express");
-const path = require("path");
-const Product = require("../model/product");
 const router = express.Router();
-const { upload } = require("../multer");
 const ErrorHandler = require("../utils/ErrorHandler");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
-const fs = require("fs");
-const jwt = require("jsonwebtoken");
-const sendMail = require("../utils/sendMail");
-const sendToken = require("../utils/jwtToken");
 const { isSellerAuthenticated } = require("../middleware/auth");
-const sendShopToken = require("../utils/ShopToken");
 const Shop = require("../model/shop.js");
+const Event = require("../model/event");
 
 router.post(
-  "/create-product",
+  "/create-event",
   catchAsyncErrors(async (req, res, next) => {
     try {
-      const productData = req.body;
+      const eventData = req.body;
 
       const shop = await Shop.findById(req.body.shopId);
       if (!shop) {
         return next(new ErrorHandler("Shop Not Found!", 400));
       } else {
-        productData.shop = shop;
-        const product = await Product.create(productData);
+        eventData.shop = shop;
+        const event = await Event.create(eventData);
         res.status(201).json({
           success: true,
-          message: "Product created Successfully!",
-          product,
+          message: "Event created Successfully!",
+          event,
         });
       }
     } catch (error) {
@@ -37,17 +30,17 @@ router.post(
   })
 );
 
-// Get all Products of a Shop
+// Get all Events Products of a Shop
 router.get(
-  "/getproducts-shop/:id",
+  "/getevents-shop/:id",
   isSellerAuthenticated,
   catchAsyncErrors(async (req, res, next) => {
     try {
-      const products = await Product.find({ shopId: req.params.id });
+      const events = await Event.find({ shopId: req.params.id });
 
       res.status(200).json({
         success: true,
-        products,
+        events,
       });
     } catch (error) {
       return next(new ErrorHandler(error.message, 400));
@@ -55,19 +48,19 @@ router.get(
   })
 );
 
-// Delete a Product of Shop
+// Delete an Event Product of Shop
 router.delete(
-  "/delete-shop-product/:id",
+  "/delete-shop-event/:id",
   isSellerAuthenticated,
   catchAsyncErrors(async (req, res, next) => {
     try {
-      const product = await Product.findByIdAndDelete(req.params.id);
+      const event = await Event.findByIdAndDelete(req.params.id);
 
-      if (!product) return next(new ErrorHandler("Product Not Found!", 500));
+      if (!event) return next(new ErrorHandler("Event Not Found!", 500));
 
       res.status(200).json({
         success: true,
-        message: "Product Deleted Successfully!",
+        message: "Event Deleted Successfully!",
       });
     } catch (error) {
       return next(new ErrorHandler(error.message, 400));
