@@ -25,6 +25,9 @@ const ShopDashboardPage = () => {
       case "/dashboard/create-event":
         setActive(6);
         break;
+      case "/dashboard/coupons":
+        setActive(9);
+        break;
       // case '/contact':
       //   // code to handle contact page
       //   break;

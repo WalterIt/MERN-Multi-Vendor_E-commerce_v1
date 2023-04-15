@@ -193,7 +193,7 @@ const ShopCreateEvents = () => {
 
           <div>
             <label htmlFor="" className="py-2">
-              Event Product Stock
+              Product Stock
               <span className="text-red-500 font-extrabold">*</span>
             </label>
             <input

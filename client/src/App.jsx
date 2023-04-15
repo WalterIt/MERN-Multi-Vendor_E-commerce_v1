@@ -21,6 +21,7 @@ import ShopCreateProduct from "./pages/shop/ShopCreateProduct";
 import ShopCreateEvents from "./pages/shop/ShopCreateEvents";
 import ShopProducts from "./pages/shop/ShopProducts";
 import ShopEvents from "./pages/shop/ShopEvents";
+import ShopCoupons from "./pages/shop/ShopCoupons";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import ProtectedRoute from "./routes/ProtectedRoute";
@@ -95,6 +96,7 @@ function App() {
             element={<ShopCreateEvents />}
           />
           <Route path="/dashboard/events" element={<ShopEvents />} />
+          <Route path="/dashboard/coupons" element={<ShopCoupons />} />
         </Route>
       </Routes>
       <ToastContainer
