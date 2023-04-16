@@ -22,6 +22,7 @@ import ShopCreateEvents from "./pages/shop/ShopCreateEvents";
 import ShopProducts from "./pages/shop/ShopProducts";
 import ShopEvents from "./pages/shop/ShopEvents";
 import ShopCoupons from "./pages/shop/ShopCoupons";
+import ShopPreviewPage from "./pages/shop/ShopPreviewPage";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import ProtectedRoute from "./routes/ProtectedRoute";
@@ -66,6 +67,8 @@ function App() {
             }
           />
         </Route>
+        <Route path="/shop/preview/:id" element={<ShopPreviewPage />} />
+
         {/* SHOP ROUTES  */}
         <Route path="/create-shop" element={<CreateShopPage />} />
         <Route path="/login-shop" element={<LoginShopPage />} />
@@ -78,6 +81,7 @@ function App() {
             </SellerProtectedRoute>
           }
         />
+
         <Route
           path="/dashboard"
           element={

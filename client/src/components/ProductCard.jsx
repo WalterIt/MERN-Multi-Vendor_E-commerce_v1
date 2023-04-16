@@ -16,6 +16,7 @@ const ProductCard = ({ data }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const productName = data.name.replace(/\s+/g, "-");
+  // console.log(productName);
 
   return (
     <>
@@ -23,7 +24,7 @@ const ProductCard = ({ data }) => {
         <div className="flex justify-end"></div>
         <Link to={`/product/${productName}`}>
           <img
-            src={data.image_Url[0].url}
+            src={data?.images[0]}
             alt={data.name}
             className="w-full h-[170px] object-contain"
             loading="lazy"
@@ -67,14 +68,17 @@ const ProductCard = ({ data }) => {
           <div className="py-2 flex items-center justify-between ">
             <div className="flex">
               <h5 className={`${styles.productDiscountPrice}`}>
-                $ {data.price === 0 ? data.price : data.discount_price}
+                ${" "}
+                {data.originalPrice === 0
+                  ? data.originalPrice
+                  : data.discountPrice}
               </h5>
               <h4 className={`${styles.price}`}>
-                {data.price ? "$ " + data.price : null}
+                {data.originalPrice ? "$ " + data.originalPrice : null}
               </h4>
             </div>
             <span className="font-[400] text-[17px] text-[#68d284] ">
-              {data.total_sell} sold
+              {data.soldOut} sold
             </span>
           </div>
         </Link>

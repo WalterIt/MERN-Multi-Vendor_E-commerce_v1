@@ -36,6 +36,24 @@ export const productReducer = createReducer(initialState, {
   deleteProductShopRequest: (state) => {
     state.isLoading = true;
   },
+  // Get all Products
+  getAllProductsRequest: (state) => {
+    state.isLoading = true;
+  },
+  getAllProductsSuccess: (state, action) => {
+    state.isLoading = false;
+    state.products = action.payload;
+    state.success = true;
+  },
+  getAllProductsFailure: (state, action) => {
+    state.isLoading = false;
+    state.error = action?.payload;
+    state.success = false;
+  },
+  // Delete a Product of Shop
+  deleteProductShopRequest: (state) => {
+    state.isLoading = true;
+  },
   deleteProductShopSuccess: (state, action) => {
     state.isLoading = false;
     state.product = null;

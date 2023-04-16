@@ -1,28 +1,31 @@
 import { useEffect, useState } from "react";
 import styles from "../styles/styles";
 import { useSearchParams } from "react-router-dom";
-import { productData } from "../static/data";
 import ProductCard from "../components/ProductCard";
+import { useSelector } from "react-redux";
 
 const ProductsPage = () => {
+  const { products, isLoading } = useSelector((state) => state.products ?? {});
   const [searchParams] = useSearchParams();
   const categoryData = searchParams?.get("category");
   const [data, setData] = useState([]);
+  const [items, setItems] = useState([]);
 
   useEffect(() => {
     if (categoryData === null) {
-      const products =
-        productData && productData.sort((a, b) => a.total_sell - b.total_sell);
-      setData(products);
+      const productData =
+        products && [...products].sort((a, b) => a.soldOut - b.soldOut);
+      setData(productData);
     } else {
-      const products =
-        productData &&
-        productData.filter((item) => item.category === categoryData);
-      setData(products);
+      const productData =
+        products &&
+        [...products].filter((item) => item.category === categoryData);
+      setData(productData);
     }
 
     window.scrollTo(0, 0);
   }, []);
+  // console.log(items);
 
   return (
     <div>

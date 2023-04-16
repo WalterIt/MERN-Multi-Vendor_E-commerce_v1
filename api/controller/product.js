@@ -55,6 +55,23 @@ router.get(
   })
 );
 
+//Get all Products
+router.get(
+  "/getproducts",
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const products = await Product.find();
+
+      res.status(200).json({
+        success: true,
+        products,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 400));
+    }
+  })
+);
+
 // Delete a Product of Shop
 router.delete(
   "/delete-shop-product/:id",
