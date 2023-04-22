@@ -192,4 +192,25 @@ router.get(
   })
 );
 
+// get shop info
+router.get(
+  "/getshop-info/:id",
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const shop = await Shop.findById(req.params.id);
+
+      if (!shop) {
+        return next(new ErrorHandler("Shop doesn't exists", 400));
+      }
+
+      res.status(200).json({
+        success: true,
+        shop,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
+
 module.exports = router;

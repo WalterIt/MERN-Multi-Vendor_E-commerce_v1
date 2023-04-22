@@ -24,7 +24,7 @@ const ProductsPage = () => {
     }
 
     window.scrollTo(0, 0);
-  }, []);
+  }, [products]);
   // console.log(items);
 
   return (

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   AiFillHeart,
@@ -8,12 +8,24 @@ import {
 } from "react-icons/ai";
 import styles from "../../styles/styles";
 import ProductDetailsInfo from "./ProductDetailsInfo";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useParams } from "react-router-dom";
+import { getAllProductsShop } from "../../redux/actions/product";
 
 const ProductDetails = ({ data }) => {
   const [quantity, setQuantity] = useState(1);
   const [click, setClick] = useState(false);
   const [select, setSelect] = useState(0);
   const navigate = useNavigate();
+
+  // console.log(data);
+  const { allProducts } = useSelector((state) => state.products);
+  const { id } = useParams();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllProductsShop(data?.shop?._id));
+  }, [dispatch, data]);
 
   const handleMessageSubmit = () => {
     navigate("/inbox?conversation=507ebjver884ehfdjeriv84");
@@ -27,35 +39,26 @@ const ProductDetails = ({ data }) => {
             <div className="block w-full 800px:flex ">
               <div className="w-full 800px:w-[50%] ">
                 <img
-                  src={data.image_Url[select].url}
+                  src={data.images[select]}
                   alt=""
-                  className="w-[80%] "
+                  className="w-[80%] mb-6 "
                 />
                 <div className="w-full flex">
-                  <div
-                    className={`${
-                      select === 0 ? "border" : "null"
-                    } cursor-pointer`}
-                  >
-                    <img
-                      src={data?.image_Url[0].url}
-                      alt={data.name}
-                      className=" h-[200px] object-cover"
-                      onClick={() => setSelect(0)}
-                    />
-                  </div>
-                  <div
-                    className={`${
-                      select === 1 ? "border" : "null"
-                    } cursor-pointer`}
-                  >
-                    <img
-                      src={data?.image_Url[1].url}
-                      alt={data.name}
-                      className=" h-[200px] object-cover"
-                      onClick={() => setSelect(1)}
-                    />
-                  </div>
+                  {data &&
+                    data.images.map((img, i) => (
+                      <div
+                        key={i}
+                        className={`${
+                          select === 0 ? "border" : "null"
+                        } cursor-pointer`}
+                      >
+                        <img
+                          src={img}
+                          className="w-[200px] h-auto object-cover"
+                          onClick={() => setSelect(i)}
+                        />
+                      </div>
+                    ))}
                 </div>
               </div>
               <div className="w-full 800px:w-[50%] pt-5 ">
@@ -66,13 +69,13 @@ const ProductDetails = ({ data }) => {
                     {new Intl.NumberFormat("en-US", {
                       style: "currency",
                       currency: "USD",
-                    }).format(data.discount_price)}
+                    }).format(data.discountPrice)}
                   </h4>
                   <h3 className={`${styles.price}`}>
                     {new Intl.NumberFormat("en-US", {
                       style: "currency",
                       currency: "USD",
-                    }).format(data.price)}
+                    }).format(data.originalPrice)}
                   </h3>
                 </div>
                 <div
@@ -126,18 +129,20 @@ const ProductDetails = ({ data }) => {
                   </span>
                 </div>
                 <div className="flex items-center pt-8">
-                  <img
-                    src={data.shop.shop_avatar.url}
-                    alt=""
-                    className="w-[50px] h-[50px] rounded-full mr-2 object-fill "
-                  />
+                  <Link to={`/shop/preview/${data.shop._id}`}>
+                    <img
+                      src={data.shop.avatar}
+                      alt=""
+                      className="w-[50px] h-[50px] rounded-full mr-2 object-fill "
+                    />
+                  </Link>
                   <div className="pr-8">
-                    <h3 className={`${styles.shop_name} pb-1 pt-1`}>
-                      {data.shop.name}
-                    </h3>
-                    <h5 className="pb-3 text-[15px] ">
-                      ({data.shop.ratings}) Ratings
-                    </h5>
+                    <Link to={`/shop/preview/${data.shop._id}`}>
+                      <h3 className={`${styles.shop_name} pb-1 pt-1`}>
+                        {data.shop.name}
+                      </h3>
+                    </Link>
+                    <h5 className="pb-3 text-[15px] ">(4/5) Ratings</h5>
                   </div>
                   <div
                     className={`${styles.button} bg-[#6443d1] mt-4 !rounded !h-11`}
@@ -152,7 +157,7 @@ const ProductDetails = ({ data }) => {
               </div>
             </div>
           </div>
-          <ProductDetailsInfo data={data} />
+          <ProductDetailsInfo data={data} products={allProducts} />
           <br />
           <br />
         </div>

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import { productData } from "../static/data";
 import styles from "../styles/styles";
 import ProductCard from "./ProductCard";
 import axios from "axios";
@@ -15,9 +14,9 @@ const BestDeals = () => {
     const productData =
       products &&
       [...products].sort((a, b) => b.originalPrice - a.originalPrice);
-    setData(productData.slice(0, 5));
-  }, []);
-  console.log(data);
+    setData(productData?.slice(0, 5));
+  }, [products]);
+  // console.log(data);
   // console.log(productData.slice(0, 5));
 
   return (

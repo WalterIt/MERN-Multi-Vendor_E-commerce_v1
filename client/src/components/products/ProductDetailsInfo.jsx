@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../../styles/styles";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useParams } from "react-router-dom";
+import { getAllProductsShop } from "../../redux/actions/product";
 
-const ProductDetailsInfo = ({ data }) => {
+const ProductDetailsInfo = ({ data, products }) => {
   const [active, setActive] = useState(1);
 
   return (
@@ -47,9 +49,6 @@ const ProductDetailsInfo = ({ data }) => {
           <p className="py-2 text-[18px] leading-8 pb-5 whitespace-pre-line">
             {data.description}
           </p>
-          <p className="py-2 text-[18px] leading-8 pb-5 whitespace-pre-line">
-            {data.description}
-          </p>
         </>
       ) : null}
 
@@ -66,36 +65,33 @@ const ProductDetailsInfo = ({ data }) => {
           <div className="w-full block 800px:flex p-5 ">
             <div className="w-full  800px:w-[50%] ">
               <div className="flex items-center">
-                <img
-                  className="w-[50px] h-[50px] rounded-full object-fit"
-                  src={data.shop.shop_avatar.url}
-                  alt={data.shop?.name}
-                />
+                <Link to={`/shop/preview/${data.shop._id}`}>
+                  <img
+                    className="w-[50px] h-[50px] rounded-full object-fit"
+                    src={data.shop.avatar}
+                    alt={data.shop?.name}
+                  />
+                </Link>
                 <div className="pl-3">
-                  <h3 className={`${styles.shop_name}`}>{data.shop.name}</h3>
-                  <h5 className="pb-2 text-[15px]">
-                    ({data.shop.ratings}) Ratings
-                  </h5>
+                  <Link to={`/shop/preview/${data.shop._id}`}>
+                    <h3 className={`${styles.shop_name}`}>{data.shop.name}</h3>
+                  </Link>
+                  <h5 className="pb-2 text-[15px]">(4/5) Ratings</h5>
                 </div>
               </div>
-              <p className="pt-2">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam
-                in cupiditate maxime quam repudiandae, ducimus facilis atque
-                sint aspernatur labore temporibus iusto non? Natus impedit
-                quisquam sunt enim maxime quis placeat dignissimos eveniet ipsam
-                accusantium molestias repellat at quam, fuga pariatur ipsa
-                commodi debitis soluta sit expedita atque! Voluptas, aperiam.
-              </p>
+              <p className="pt-2">{data.shop.description}</p>
             </div>
             <div className="w-full 800px:w-[50%] mt-5 800px:mt-0 800px:flex flex-col items-end ">
               <div className="text-left">
                 <h5 className="font-[600] ">
                   Joined on:{" "}
-                  <span className="font-[500] ">April 8th, 2023</span>
+                  <span className="font-[500] ">
+                    {data.shop.createdAt?.slice(0, 10)}
+                  </span>
                 </h5>
                 <h5 className="font-[600] pt-3 ">
                   Total Products:
-                  <span className="font-[500] "> 1,456</span>
+                  <span className="font-[500] "> {products?.length}</span>
                 </h5>
                 <h5 className="font-[600] pt-3 ">
                   Total Reviews:

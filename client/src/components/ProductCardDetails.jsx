@@ -7,6 +7,7 @@ import {
   AiOutlineMessage,
   AiOutlineShoppingCart,
 } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 const ProductCardDetails = ({ setIsOpen, data }) => {
   const [count, setCount] = useState(1);
@@ -37,13 +38,19 @@ const ProductCardDetails = ({ setIsOpen, data }) => {
               <div className="w-full 800px:w-[50%] ">
                 <img src={data.images[0]} alt={data.name} />
                 <div className="flex">
-                  <img
-                    src={data.shop.avatar}
-                    alt={data.shop.name}
-                    className="w-[50px] h-[50px] rounded-full mr-2 "
-                  />
+                  <Link to={`/shop/preview/${data.shop._id}`}>
+                    <img
+                      src={data.shop.avatar}
+                      alt={data.shop.name}
+                      className="w-[50px] h-[50px] rounded-full mr-2 "
+                    />
+                  </Link>
                   <div>
-                    <h3 className={`${styles.shop_name}`}>{data.shop.name}</h3>
+                    <Link to={`/shop/preview/${data.shop._id}`}>
+                      <h3 className={`${styles.shop_name}`}>
+                        {data.shop.name}
+                      </h3>
+                    </Link>
                     <h5 className="pb-3 text-[15px] ">
                       ({data.shop?.ratings}) Ratings
                     </h5>
@@ -69,10 +76,18 @@ const ProductCardDetails = ({ setIsOpen, data }) => {
                 <p>{data.description}</p>
                 <div className="flex pt-3 ">
                   <h4 className={`${styles.productDiscountPrice} `}>
-                    $ {data.discountPrice}
+                    {new Intl.NumberFormat("en-US", {
+                      style: "currency",
+                      currency: "USD",
+                    }).format(data.discountPrice)}
                   </h4>
                   <h3 className={`${styles.price} `}>
-                    {data.originalPrice ? "$ " + data.originalPrice : null}
+                    {data.originalPrice
+                      ? new Intl.NumberFormat("en-US", {
+                          style: "currency",
+                          currency: "USD",
+                        }).format(data.originalPrice)
+                      : null}
                   </h3>
                 </div>
                 <div className="flex items-center justify-between mt-12 pr-3">

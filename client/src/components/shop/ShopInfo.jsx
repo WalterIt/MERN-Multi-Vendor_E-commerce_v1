@@ -1,15 +1,20 @@
 import { useDispatch, useSelector } from "react-redux";
 import styles from "../../styles/styles";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import server from "../../server";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { useEffect, useState } from "react";
 
 const ShopInfo = ({ isOwner }) => {
-  const { user } = useSelector((state) => state.seller);
-  const seller = user;
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { allProducts } = useSelector((state) => state.products);
+  const { user } = useSelector((state) => state.seller);
+  const seller = user;
+  const { id } = useParams();
+  const [data, setData] = useState({});
+  // const [isLoading, setIsLoading] = useState(false);
 
   const handleLogout = () => {
     axios
@@ -25,35 +30,50 @@ const ShopInfo = ({ isOwner }) => {
       });
   };
 
+  useEffect(() => {
+    axios
+      .get(`${server}/shop/getshop-info/${id}`)
+      .then((res) => {
+        setData(res.data.shop);
+        // setIsLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        // setIsLoading(false);
+      });
+  }, []);
+
+  // console.log(data);
+
   return (
     <div className="">
-      <div className="w-full py-5 px-2">
+      <div className="w-full h-auto py-5 px-2">
         <div className="w-full flex items-center justify-center">
           <img
-            src={seller.avatar}
-            alt={seller.name}
-            title={seller.name}
+            src={data?.avatar}
+            alt={data?.name}
+            title={data?.name}
             className="w-[150px] h-[150px] object-fit rounded-full"
           />
         </div>
-        <h3 className="text-center py-2 text-[20px] ">{seller.name}</h3>
+        <h3 className="text-center py-2 text-[20px] ">{data.name}</h3>
         <p className="text-[16px] text-[#000000a6] p-[10px] flex items-center ">
-          {seller.description}
+          {data.description}
         </p>
       </div>
       <div className="p-4">
         <h5 className="font-[600] ">Address</h5>
-        <h4 className="text-[#000000a6]">{seller.address}</h4>
+        <h4 className="text-[#000000a6]">{data.address}</h4>
       </div>
 
       <div className="p-4">
         <h5 className="font-[600] ">Phone Number</h5>
-        <h4 className="text-[#000000a6]">{seller.phoneNumber}</h4>
+        <h4 className="text-[#000000a6]">{data.phoneNumber}</h4>
       </div>
 
       <div className="p-4">
         <h5 className="font-[600] ">Total Products</h5>
-        <h4 className="text-[#000000a6]">234 Products</h4>
+        <h4 className="text-[#000000a6]">{allProducts.length} Products</h4>
       </div>
 
       <div className="p-4">
@@ -63,7 +83,7 @@ const ShopInfo = ({ isOwner }) => {
 
       <div className="p-4">
         <h5 className="font-[600] ">Joined on:</h5>
-        <h4 className="text-[#000000a6]">{seller.createdAt.slice(0, 10)} </h4>
+        <h4 className="text-[#000000a6]">{data?.createdAt?.slice(0, 10)} </h4>
       </div>
       {isOwner && (
         <div className="py-3 px-4">

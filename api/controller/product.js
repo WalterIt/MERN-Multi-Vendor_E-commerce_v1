@@ -40,7 +40,6 @@ router.post(
 // Get all Products of a Shop
 router.get(
   "/getproducts-shop/:id",
-  isSellerAuthenticated,
   catchAsyncErrors(async (req, res, next) => {
     try {
       const products = await Product.find({ shopId: req.params.id });

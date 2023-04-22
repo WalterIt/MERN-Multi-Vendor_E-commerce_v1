@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const CountDown = () => {
+const CountDown = ({ allEvents }) => {
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
 
   useEffect(() => {
@@ -11,7 +11,7 @@ const CountDown = () => {
   });
 
   function calculateTimeLeft() {
-    const difference = +new Date("2023-05-15") - +new Date();
+    const difference = +new Date(allEvents.finishDate) - +new Date();
     let timeLeft = {};
 
     if (difference > 0) {

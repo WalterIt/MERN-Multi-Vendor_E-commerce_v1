@@ -15,6 +15,8 @@ const ProductCard = ({ data }) => {
   const [click, setClick] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
+  // console.log(data);
+
   const productName = data.name.replace(/\s+/g, "-");
   // console.log(productName);
 
@@ -30,7 +32,7 @@ const ProductCard = ({ data }) => {
             loading="lazy"
           />
         </Link>
-        <Link to="/">
+        <Link to={`/shop/preview/${data.shop._id}`}>
           <h5 className={`${styles.shop_name}`}>{data.shop.name} </h5>
         </Link>
         <Link to={`/product/${productName}`}>
@@ -68,13 +70,23 @@ const ProductCard = ({ data }) => {
           <div className="py-2 flex items-center justify-between ">
             <div className="flex">
               <h5 className={`${styles.productDiscountPrice}`}>
-                ${" "}
                 {data.originalPrice === 0
-                  ? data.originalPrice
-                  : data.discountPrice}
+                  ? new Intl.NumberFormat("en-US", {
+                      style: "currency",
+                      currency: "USD",
+                    }).format(data.originalPrice)
+                  : new Intl.NumberFormat("en-US", {
+                      style: "currency",
+                      currency: "USD",
+                    }).format(data.discountPrice)}
               </h5>
               <h4 className={`${styles.price}`}>
-                {data.originalPrice ? "$ " + data.originalPrice : null}
+                {data.originalPrice
+                  ? new Intl.NumberFormat("en-US", {
+                      style: "currency",
+                      currency: "USD",
+                    }).format(data.originalPrice)
+                  : null}
               </h4>
             </div>
             <span className="font-[400] text-[17px] text-[#68d284] ">

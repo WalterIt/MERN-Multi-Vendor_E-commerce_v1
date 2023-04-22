@@ -1,5 +1,4 @@
 import styles from "../styles/styles";
-import { productData } from "../static/data";
 import ProductCard from "./ProductCard";
 import server from "../server";
 import axios from "axios";

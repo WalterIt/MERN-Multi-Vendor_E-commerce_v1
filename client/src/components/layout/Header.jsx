@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../../styles/styles";
 import { Link } from "react-router-dom";
-import { categoriesData, productData } from "../../static/data.jsx";
+import { categoriesData } from "../../static/data.jsx";
 import {
   AiOutlineHeart,
   AiOutlineSearch,
@@ -19,7 +19,7 @@ import { RxCross1 } from "react-icons/rx";
 
 const Header = ({ activeHeading }) => {
   const { isAuthenticated, user } = useSelector((state) => state.user ?? {});
-  // console.log(user);
+  const { products } = useSelector((state) => state.products ?? {});
   const [searchTerm, setSearchTerm] = useState("");
   const [searchData, setSearchData] = useState(null);
   const [active, setActive] = useState(false);
@@ -30,13 +30,18 @@ const Header = ({ activeHeading }) => {
 
   const handleSearchChange = (e) => {
     const term = e.target.value;
+
     setSearchTerm(term);
 
     const filteredProducts =
-      productData &&
-      productData.filter((product) =>
+      products &&
+      products.filter((product) =>
         product.name.toLowerCase().includes(term.toLowerCase())
       );
+
+    if (filteredProducts === "") {
+      setSearchData(null);
+    }
 
     setSearchData(filteredProducts);
   };
@@ -68,12 +73,13 @@ const Header = ({ activeHeading }) => {
               value={searchTerm}
               onChange={handleSearchChange}
               className="h-[40px] w-full px-2 border-[#3957db] border-[2px] rounded-sm"
+              onblur={() => setSearchData(null)}
             />
             <AiOutlineSearch
               size={30}
               className="absolute right-2 top-1.5 cursor-pointer"
             />
-            {searchData && searchData !== 0 ? (
+            {searchData && searchData.length !== 0 ? (
               <div className="absolute min-h-[30vh] bg-slate-50 shadow-sm-2 z-[9] p-4">
                 {searchData &&
                   searchData.map((item, i) => {
@@ -82,12 +88,12 @@ const Header = ({ activeHeading }) => {
                     const productName = data.replace(/\s+/g, "-");
 
                     return (
-                      <Link to={`/product/${productName}`}>
-                        <div className="w-full flex items-start-py-3">
+                      <Link key={i} to={`/product/${productName}`}>
+                        <div className="w-full flex items-start justify-items-center py-3">
                           <img
-                            src={item.image_Url[0].url}
+                            src={item.images[0]}
                             alt={data}
-                            className="w-[40px] h-[40px] mr-[10px]"
+                            className="w-[40px] h-auto mr-[10px]"
                           />
                           <h1>{data}</h1>
                         </div>

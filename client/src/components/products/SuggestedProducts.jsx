@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { productData } from "../../static/data";
 import styles from "../../styles/styles";
 import ProductCard from "../ProductCard";
+import { useSelector } from "react-redux";
 
 const SuggestedProducts = ({ data }) => {
-  const [products, setProducts] = useState(null);
+  const { products } = useSelector((state) => state.products);
+  const [productData, setProductData] = useState();
 
   useEffect(() => {
     const suggestedProducts =
-      productData &&
-      productData.filter((item) => item.category === data.category);
-    setProducts(suggestedProducts);
+      products &&
+      [...products].filter((item) => item.category === data.category);
+    setProductData(suggestedProducts);
   }, []);
 
   return (
@@ -23,8 +24,8 @@ const SuggestedProducts = ({ data }) => {
             Related Products
           </h2>
           <div className="grid grid-cols-1 gap-[20px] md:grid-cols-2 md:gap-[25px] lg:grid-cols-4 lg:gap-[25px] xl:grid-cols-5 xl:gap-[30px] mb-12">
-            {products &&
-              products.map((item, i) => <ProductCard data={item} key={i} />)}
+            {productData &&
+              productData.map((item, i) => <ProductCard data={item} key={i} />)}
           </div>
         </div>
       ) : null}

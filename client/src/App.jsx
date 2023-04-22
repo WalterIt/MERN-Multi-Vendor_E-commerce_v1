@@ -27,6 +27,11 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import SellerProtectedRoute from "./routes/SellerProtectedRoute";
+import { useEffect } from "react";
+import Store from "./redux/store";
+// import { loadUser } from "./redux/actions/user";
+import { getAllProducts } from "./redux/actions/product";
+import { getAllEvents } from "./redux/actions/event";
 
 axios.defaults.withCredentials = true;
 
@@ -34,6 +39,12 @@ function App() {
   const { isAuthenticated, loading } = useSelector(
     (state) => state?.user || {}
   );
+
+  useEffect(() => {
+    // Store.dispatch(loadUser());
+    Store.dispatch(getAllProducts());
+    Store.dispatch(getAllEvents());
+  }, []);
 
   return (
     <BrowserRouter>
