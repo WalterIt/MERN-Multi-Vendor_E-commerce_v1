@@ -13,7 +13,7 @@ const Events = () => {
           <h1>Popular Events</h1>
         </div>
         <div className="w-full grid">
-          <EventCard allEvents={allEvents[0]} />
+          <EventCard allEvents={allEvents && allEvents[0]} />
         </div>
       </div>
     </div>
