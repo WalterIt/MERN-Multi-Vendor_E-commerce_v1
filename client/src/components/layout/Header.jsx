@@ -75,7 +75,7 @@ const Header = ({ activeHeading }) => {
               value={searchTerm}
               onChange={handleSearchChange}
               className="h-[40px] w-full px-2 border-[#3957db] border-[2px] rounded-sm"
-              onBlur={() => setSearchData(null)}
+              // onBlur={() => setSearchData(null)}
             />
             <AiOutlineSearch
               size={30}
@@ -85,19 +85,19 @@ const Header = ({ activeHeading }) => {
               <div className="absolute min-h-[30vh] bg-slate-50 shadow-sm-2 z-[9] p-4">
                 {searchData &&
                   searchData.map((item, i) => {
-                    const data = item.name;
-
-                    const productName = data.replace(/\s+/g, "-");
-
                     return (
-                      <Link key={i} to={`/product/${productName}`}>
+                      <Link
+                        key={i}
+                        to={`/product/${item._id}`}
+                        onClick={() => setSearchData(null)}
+                      >
                         <div className="w-full flex items-start justify-items-center py-3">
                           <img
                             src={item.images[0]}
-                            alt={data}
+                            alt={item.name}
                             className="w-[40px] h-auto mr-[10px]"
                           />
-                          <h1>{data}</h1>
+                          <h1>{item.name}</h1>
                         </div>
                       </Link>
                     );

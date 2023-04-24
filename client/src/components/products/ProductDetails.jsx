@@ -11,21 +11,62 @@ import ProductDetailsInfo from "./ProductDetailsInfo";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { getAllProductsShop } from "../../redux/actions/product";
+import { addToCart } from "../../redux/actions/cart";
+import { toast } from "react-toastify";
+import {
+  addToWishlist,
+  removeFromWhislist,
+} from "../../redux/actions/wishlist";
 
 const ProductDetails = ({ data }) => {
+  const { cart } = useSelector((state) => state.cart);
+  const { allProducts } = useSelector((state) => state.products);
+  const { wishlist } = useSelector((state) => state.wishlist || []);
+  const { id } = useParams();
+  const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(1);
   const [click, setClick] = useState(false);
   const [select, setSelect] = useState(0);
   const navigate = useNavigate();
 
-  // console.log(data);
-  const { allProducts } = useSelector((state) => state.products);
-  const { id } = useParams();
-  const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(getAllProductsShop(data?.shop?._id));
   }, [dispatch, data]);
+
+  useEffect(() => {
+    if (wishlist && wishlist.find((item) => item._id === data?._id)) {
+      setClick(true);
+    } else {
+      setClick(false);
+    }
+  }, [wishlist]);
+
+  const handleAddToCart = (id) => {
+    const ifItemExists = cart && cart.find((item) => item._id === id);
+    if (ifItemExists) {
+      toast.error(`Already added to cart!`);
+    } else {
+      if (data.stock < 1) {
+        toast.error(`Product stock limited!`);
+      } else {
+        const item = { ...data, quantity: quantity };
+        dispatch(addToCart(item));
+        toast.success("Item added to Cart successfully!");
+      }
+    }
+  };
+
+  const handleAddToWhislist = (item) => {
+    dispatch(addToWishlist(item));
+    setClick(!click);
+    toast.success("Item added to Wishlist successfully!");
+  };
+
+  const handleRemoveFromWhislist = (item) => {
+    dispatch(removeFromWhislist(item));
+    setClick(!click);
+    toast.success(`Item removed from wishlist successfully!`);
+  };
 
   const handleMessageSubmit = () => {
     navigate("/inbox?conversation=507ebjver884ehfdjeriv84");
@@ -49,7 +90,7 @@ const ProductDetails = ({ data }) => {
                       <div
                         key={i}
                         className={`${
-                          select === 0 ? "border" : "null"
+                          select === i ? "border" : "null"
                         } cursor-pointer`}
                       >
                         <img
@@ -105,7 +146,7 @@ const ProductDetails = ({ data }) => {
                       <AiFillHeart
                         size={30}
                         className="cursor-pointer"
-                        onClick={() => setClick(!click)}
+                        onClick={() => handleRemoveFromWhislist(data)}
                         color={click ? "red" : "#333"}
                         title="Remove from wishlist"
                       />
@@ -113,7 +154,9 @@ const ProductDetails = ({ data }) => {
                       <AiOutlineHeart
                         size={30}
                         className="cursor-pointer"
-                        onClick={() => setClick(!click)}
+                        onClick={() => {
+                          handleAddToWhislist(data);
+                        }}
                         color={click ? "red" : "#333"}
                         title="Add to wishlist"
                       />
@@ -122,6 +165,7 @@ const ProductDetails = ({ data }) => {
                 </div>
                 <div
                   className={`${styles.button} !mt-6 !rounded !h-11 flex items-center`}
+                  onClick={() => handleAddToCart(data._id)}
                 >
                   <span className="text-white flex items-center">
                     Add to cart{" "}

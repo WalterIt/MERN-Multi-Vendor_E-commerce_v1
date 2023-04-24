@@ -22,8 +22,6 @@ const ProductCard = ({ data }) => {
   const [click, setClick] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
-  const productName = data.name.replace(/\s+/g, "-");
-
   useEffect(() => {
     if (wishlist && wishlist.find((item) => item._id === data._id)) {
       setClick(true);
@@ -64,7 +62,7 @@ const ProductCard = ({ data }) => {
       {data.stock > 0 ? (
         <div className="w-full h-[370px] bg-white rounded-lg shadow-sm p-3 relative cursor-pointer ">
           <div className="flex justify-end"></div>
-          <Link to={`/product/${productName}`}>
+          <Link to={`/product/${data._id}`}>
             <img
               src={data?.images[0]}
               alt={data.name}
@@ -75,7 +73,7 @@ const ProductCard = ({ data }) => {
           <Link to={`/shop/preview/${data.shop._id}`}>
             <h5 className={`${styles.shop_name}`}>{data.shop.name} </h5>
           </Link>
-          <Link to={`/product/${productName}`}>
+          <Link to={`/product/${data._id}`}>
             <h4 className="pb-3 font-[500] ">
               {data.name.length > 40
                 ? data.name.slice(0, 40) + "..."
