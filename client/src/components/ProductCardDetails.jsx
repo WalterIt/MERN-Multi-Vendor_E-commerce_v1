@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RxCross1 } from "react-icons/rx";
 import styles from "../styles/styles";
 import {
@@ -12,12 +12,26 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { addToCart } from "../redux/actions/cart";
 
-const ProductCardDetails = ({ setIsOpen, data }) => {
+const ProductCardDetails = ({
+  setIsOpen,
+  data,
+  handleAddToWhislist,
+  handleRemoveFromWhislist,
+}) => {
   const { cart } = useSelector((state) => state.cart);
+  const { wishlist } = useSelector((state) => state.wishlist || []);
   const dispatch = useDispatch();
   const [count, setCount] = useState(1);
   const [click, setClick] = useState(false);
   // const [select, setSelect] = useState(false);
+
+  useEffect(() => {
+    if (wishlist && wishlist.find((item) => item._id === data._id)) {
+      setClick(true);
+    } else {
+      setClick(false);
+    }
+  }, [wishlist]);
 
   const handleMessageSubmit = () => {};
 
@@ -133,7 +147,7 @@ const ProductCardDetails = ({ setIsOpen, data }) => {
                       <AiFillHeart
                         size={30}
                         className="cursor-pointer "
-                        onClick={() => setClick(!click)}
+                        onClick={() => handleRemoveFromWhislist(data)}
                         color={click ? "red" : "#333"}
                         title="Remove from Wishlist"
                       />
@@ -141,7 +155,7 @@ const ProductCardDetails = ({ setIsOpen, data }) => {
                       <AiOutlineHeart
                         size={30}
                         className="cursor-pointer "
-                        onClick={() => setClick(!click)}
+                        onClick={() => handleAddToWhislist(data)}
                         color={click ? "red" : "#333"}
                         title="Add to Wishlist"
                       />

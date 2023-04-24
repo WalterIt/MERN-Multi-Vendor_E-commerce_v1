@@ -39,7 +39,7 @@ const Cart = ({ setOpenCart }) => {
                 onClick={() => setOpenCart(false)}
               />
             </div>
-            <h5 className="uppercase font-bold text-lg text-red-600 ">
+            <h5 className="uppercase font-bold tracking-widest text-lg text-red-600 ">
               Cart is Empty!
             </h5>
           </div>
@@ -141,8 +141,8 @@ const CartItem = ({ data, handleQuantityChange, handleRemoveFromCart }) => {
           </div>
         </div>
         <img
-          src={data.images[0]}
-          alt={data.name}
+          src={data && data?.images}
+          alt={data?.name}
           loading="lazy"
           className="w-[80px] h-auto object-fill ml-2 "
         />
