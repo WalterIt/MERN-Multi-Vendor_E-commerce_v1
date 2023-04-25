@@ -47,6 +47,32 @@ export const loadUser = () => async (dispatch) => {
   }
 };
 
+// Update User Information
+export const updateUserInformation =
+  (name, email, phoneNumber, password, avatarLink) => async (dispatch) => {
+    try {
+      dispatch({
+        type: "updateUserInfoRequest",
+      });
+      const { data } = await axios.put(`${server}/user/update-user-info`, {
+        name,
+        email,
+        phoneNumber,
+        password,
+        avatarLink,
+      });
+      dispatch({
+        type: "updateUserInfoSuccess",
+        payload: data.user,
+      });
+    } catch (error) {
+      dispatch({
+        type: "updateUserInfoFailure",
+        payload: error.response?.data?.message,
+      });
+    }
+  };
+
 // Login Seller
 export const loginSeller = (formData) => async (dispatch) => {
   try {

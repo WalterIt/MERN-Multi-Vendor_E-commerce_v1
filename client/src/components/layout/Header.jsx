@@ -177,6 +177,7 @@ const Header = ({ activeHeading }) => {
 
             <div className={`${styles.noramlFlex}`}>
               <div className="relative cursor-pointer mr-[15px]">
+                {/* // TODO: Fix if there's not user.avatar */}
                 {isAuthenticated ? (
                   <Link to="/profile">
                     <img

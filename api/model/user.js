@@ -19,16 +19,35 @@ const userSchema = new mongoose.Schema(
       minLength: [6, "Password should be greater than 6 characters"],
       select: false,
     },
-    address: {
+    phoneNumber: {
       type: String,
     },
+    addresses: [
+      {
+        country: String,
+      },
+      {
+        city: String,
+      },
+      {
+        address1: String,
+      },
+      {
+        address2: String,
+      },
+      {
+        zipCode: String,
+      },
+      {
+        addressType: String,
+      },
+    ],
     role: {
       type: String,
       default: "user",
     },
     avatar: {
       type: String,
-      required: true,
     },
     resetPasswordToken: String,
     resetPasswordTime: Date,

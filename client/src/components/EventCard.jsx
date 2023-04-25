@@ -9,7 +9,7 @@ const EventCard = ({ active, allEvents }) => {
       } lg:flex p-2`}
     >
       <div className="w-full lg:w-[50%] m-auto px-6 py-6 ">
-        <img src={allEvents?.images} alt={allEvents.name} loading="lazy" />
+        <img src={allEvents?.images} alt={allEvents?.name} loading="lazy" />
       </div>
       <div className="w-full lg:w-[50%] flex flex-col justify-center mr-6 ">
         <h2 className={`${styles.productTitle}`}>

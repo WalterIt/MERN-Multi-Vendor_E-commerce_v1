@@ -16,6 +16,8 @@ router.post("/create-user", upload.single("file"), async (req, res, next) => {
     const { name, email, password, avatar } = req.body;
     const userEmail = await User.findOne({ email });
 
+    // console.log(req.body);
+
     if (userEmail) {
       // const filename = req.file.filename;
       // const filePath = `uploads/${filename}`;
@@ -160,6 +162,46 @@ router.get(
       }
 
       res.status(200).json({
+        success: true,
+        user,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
+
+// Update User Information
+router.put(
+  "/update-user-info",
+  isAuthenticated,
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const { email, password, phoneNumber, name, avatarLink } = req.body;
+      // console.log(req.body);
+
+      const user = await User.findOne({ email }).select("+password");
+
+      if (!user) {
+        return next(new ErrorHandler("User not found!", 400));
+      }
+
+      const isPasswordValid = await user.comparePassword(password);
+
+      if (!isPasswordValid) {
+        return next(
+          new ErrorHandler("Please provide the correct information!", 400)
+        );
+      }
+
+      user.name = name;
+      user.email = email;
+      user.phoneNumber = phoneNumber;
+      user.avatar = avatarLink;
+
+      await user.save();
+
+      res.status(201).json({
         success: true,
         user,
       });
