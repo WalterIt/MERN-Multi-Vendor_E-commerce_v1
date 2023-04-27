@@ -13,6 +13,8 @@ import EventsPage from "./pages/EventsPage";
 import FAQPage from "./pages/FAQPage";
 import Layout from "./pages/Layout";
 import ProfilePage from "./pages/ProfilePage";
+import CheckoutPage from "./pages/CheckoutPage";
+import PaymentPage from "./pages/PaymentPage";
 import CreateShopPage from "./pages/auth/CreateShopPage";
 import LoginShopPage from "./pages/auth/LoginShopPage";
 import ShopHomePage from "./pages/shop/ShopHomePage";
@@ -69,6 +71,22 @@ function App() {
           <Route path="/best-selling" element={<BestSellingPage />} />
           <Route path="/events" element={<EventsPage />} />
           <Route path="/faq" element={<FAQPage />} />
+          <Route
+            path="/checkout"
+            element={
+              <ProtectedRoute>
+                <CheckoutPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/payment"
+            element={
+              <ProtectedRoute>
+                <PaymentPage />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/profile"
             element={
