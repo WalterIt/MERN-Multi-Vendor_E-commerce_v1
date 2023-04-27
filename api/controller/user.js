@@ -251,6 +251,33 @@ router.put(
   })
 );
 
+// Update User Password
+router.put(
+  "/update-user-password",
+  isAuthenticated,
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const user = await User.findById(req.user.id).select("+password");
+
+      const comparePasswords = await user.comparePassword(req.body.oldPassword);
+
+      if (!comparePasswords)
+        return next(new ErrorHandler("Old Password is Incorrect!", 400));
+
+      user.password = req.body.password;
+
+      await user.save();
+
+      res.status(200).json({
+        success: true,
+        message: "Password updated successfully!",
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
+
 // Delete User Addresses
 router.delete(
   "/delete-user-address/:id",

@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import AllOrders from "./AllOrders";
 import AllRefundOrders from "./AllRefundOrders";
 import TrackOrder from "./TrackOrder";
-import PaymentMethod from "./PaymentMethod";
 import Address from "./Address";
 import { AiOutlineCamera } from "react-icons/ai";
 import { updateUserInformation } from "../../redux/actions/user";
@@ -18,6 +17,7 @@ import {
 import app from "../../firebase";
 import axios from "axios";
 import server from "../../server";
+import ChangePassword from "./ChangePassword";
 
 const ProfileContent = ({ active }) => {
   const dispatch = useDispatch();
@@ -216,10 +216,10 @@ const ProfileContent = ({ active }) => {
         </div>
       )}
 
-      {/* PAYMENT METHODS */}
+      {/* CHANGE PASSWORD */}
       {active === 6 && (
         <div>
-          <PaymentMethod />
+          <ChangePassword />
         </div>
       )}
 
