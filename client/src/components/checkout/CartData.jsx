@@ -1,5 +1,6 @@
 const CartData = ({ orderData }) => {
   const shipping = orderData?.shipping?.toFixed(2);
+
   return (
     <div className="w-full bg-[#fff] rounded-md p-5 pb-8">
       <div className="flex justify-between">

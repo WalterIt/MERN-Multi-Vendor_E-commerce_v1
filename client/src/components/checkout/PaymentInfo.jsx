@@ -1,12 +1,12 @@
 import { useState } from "react";
 import styles from "../../styles/styles";
-// import {
-//   CardNumberElement,
-//   CardCvcElement,
-//   CardExpiryElement,
-//   useStripe,
-//   useElements,
-// } from "@stripe/react-stripe-js";
+import {
+  CardNumberElement,
+  CardCvcElement,
+  CardExpiryElement,
+  useStripe,
+  useElements,
+} from "@stripe/react-stripe-js";
 // import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 const PaymentInfo = ({
@@ -54,7 +54,7 @@ const PaymentInfo = ({
                 </div>
                 <div className="w-[50%]">
                   <label className="block pb-2">Exp Date</label>
-                  {/* <CardExpiryElement
+                  <CardExpiryElement
                     className={`${styles.input}`}
                     options={{
                       style: {
@@ -72,14 +72,14 @@ const PaymentInfo = ({
                         },
                       },
                     }}
-                  /> */}
+                  />
                 </div>
               </div>
 
               <div className="w-full flex pb-3">
                 <div className="w-[50%]">
                   <label className="block pb-2">Card Number</label>
-                  {/* <CardNumberElement
+                  <CardNumberElement
                     className={`${styles.input} !h-[35px] !w-[95%]`}
                     options={{
                       style: {
@@ -97,11 +97,11 @@ const PaymentInfo = ({
                         },
                       },
                     }}
-                  /> */}
+                  />
                 </div>
                 <div className="w-[50%]">
                   <label className="block pb-2">CVV</label>
-                  {/* <CardCvcElement
+                  <CardCvcElement
                     className={`${styles.input} !h-[35px]`}
                     options={{
                       style: {
@@ -119,7 +119,7 @@ const PaymentInfo = ({
                         },
                       },
                     }}
-                  /> */}
+                  />
                 </div>
               </div>
               <input

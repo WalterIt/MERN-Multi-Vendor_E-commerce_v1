@@ -1,29 +1,31 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-// import {
-//   CardNumberElement,
-//   CardCvcElement,
-//   CardExpiryElement,
-//   useStripe,
-//   useElements,
-// } from "@stripe/react-stripe-js";
+import {
+  CardNumberElement,
+  CardCvcElement,
+  CardExpiryElement,
+  useStripe,
+  useElements,
+} from "@stripe/react-stripe-js";
 // import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { server } from "../../server";
 import { toast } from "react-toastify";
 import { RxCross1 } from "react-icons/rx";
 import PaymentInfo from "./PaymentInfo";
 import CartData from "./CartData";
+import { clearCart } from "../../redux/actions/cart";
 
 const Payment = () => {
+  const { user } = useSelector((state) => state.user);
   const [orderData, setOrderData] = useState([]);
   const [open, setOpen] = useState(false);
-  const { user } = useSelector((state) => state.user);
   const navigate = useNavigate();
-  //   const stripe = useStripe();
-  //   const elements = useElements();
+  const dispatch = useDispatch();
+  const stripe = useStripe();
+  const elements = useElements();
 
   useEffect(() => {
     const orderData = JSON.parse(localStorage.getItem("latestOrder"));
@@ -90,6 +92,7 @@ const Payment = () => {
         setOpen(false);
         navigate("/order/success");
         toast.success("Order successful!");
+        dispatch(clearCart());
         localStorage.setItem("cartItems", JSON.stringify([]));
         localStorage.setItem("latestOrder", JSON.stringify([]));
         window.location.reload();
@@ -118,11 +121,12 @@ const Payment = () => {
       const client_secret = data.client_secret;
 
       if (!stripe || !elements) return;
-      //   const result = await stripe.confirmCardPayment(client_secret, {
-      //     payment_method: {
-      //       card: elements.getElement(CardNumberElement),
-      //     },
-      //   });
+
+      const result = await stripe.confirmCardPayment(client_secret, {
+        payment_method: {
+          card: elements.getElement(CardNumberElement),
+        },
+      });
 
       if (result.error) {
         toast.error(result.error.message);
@@ -140,6 +144,7 @@ const Payment = () => {
               setOpen(false);
               navigate("/order/success");
               toast.success("Order successful!");
+              dispathc;
               localStorage.setItem("cartItems", JSON.stringify([]));
               localStorage.setItem("latestOrder", JSON.stringify([]));
               window.location.reload();

@@ -2,8 +2,8 @@ import styles from "../../styles/styles";
 
 const CheckoutSteps = ({ active }) => {
   return (
-    <div>
-      <div className="w-full flex justify-center pt-5">
+    <div className="py-10">
+      <div className="w-full flex justify-center ">
         <div className="w-[90%] 800px:w-[50%] flex items-center flex-wrap">
           <div className={`${styles.noramlFlex}`}>
             <div className={`${styles.cart_button}`}>
