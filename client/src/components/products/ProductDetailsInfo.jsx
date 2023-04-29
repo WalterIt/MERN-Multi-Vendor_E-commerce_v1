@@ -97,7 +97,7 @@ const ProductDetailsInfo = ({ data, products }) => {
                   Total Reviews:
                   <span className="font-[500] "> 256</span>
                 </h5>
-                <Link to="/">
+                <Link to={`/shop/preview/${data.shop._id}`}>
                   <div
                     className={`${styles.button} !rounded-[4px] !h-[39.5px] mt-6`}
                   >

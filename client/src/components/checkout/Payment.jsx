@@ -8,12 +8,11 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
-// import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { server } from "../../server";
 import { toast } from "react-toastify";
-import { RxCross1 } from "react-icons/rx";
 import PaymentInfo from "./PaymentInfo";
 import CartData from "./CartData";
 import { clearCart } from "../../redux/actions/cart";
@@ -37,7 +36,7 @@ const Payment = () => {
       .create({
         purchase_units: [
           {
-            description: "Sunflower",
+            description: "VS-Marketplace",
             amount: {
               currency_code: "USD",
               value: orderData?.totalPrice,
@@ -49,8 +48,8 @@ const Payment = () => {
           shipping_preference: "NO_SHIPPING",
         },
       })
-      .then((orderID) => {
-        return orderID;
+      .then((orderId) => {
+        return orderId;
       });
   };
 
@@ -90,12 +89,12 @@ const Payment = () => {
       .post(`${server}/order/create-order`, order, config)
       .then((res) => {
         setOpen(false);
-        navigate("/order/success");
         toast.success("Order successful!");
         dispatch(clearCart());
         localStorage.setItem("cartItems", JSON.stringify([]));
         localStorage.setItem("latestOrder", JSON.stringify([]));
-        window.location.reload();
+        navigate("/order/success");
+        // window.location.reload();
       });
   };
 
@@ -142,11 +141,11 @@ const Payment = () => {
             .post(`${server}/order/create-order`, order, config)
             .then((res) => {
               setOpen(false);
-              navigate("/order/success");
               toast.success("Order successful!");
-              dispathc;
+              dispatch(clearCart());
               localStorage.setItem("cartItems", JSON.stringify([]));
               localStorage.setItem("latestOrder", JSON.stringify([]));
+              navigate("/order/success");
               window.location.reload();
             });
         }
@@ -173,11 +172,11 @@ const Payment = () => {
       .post(`${server}/order/create-order`, order, config)
       .then((res) => {
         setOpen(false);
-        navigate("/order/success");
         toast.success("Order successful!");
         localStorage.setItem("cartItems", JSON.stringify([]));
         localStorage.setItem("latestOrder", JSON.stringify([]));
-        window.location.reload();
+        navigate("/order/success");
+        // window.location.reload();
       });
   };
 

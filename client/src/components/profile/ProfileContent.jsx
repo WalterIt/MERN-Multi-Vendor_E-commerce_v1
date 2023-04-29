@@ -76,11 +76,17 @@ const ProfileContent = ({ active }) => {
   };
 
   // console.log(avatarLink);
+  useEffect(() => {
+    if (avatarLink) {
+      setAvatarLink(avatarLink);
+    } else {
+      setAvatarLink(user?.avatar);
+    }
+  }, [avatarLink]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // setAvatar(avatarLink);
-    console.log(avatarLink);
+
     dispatch(
       updateUserInformation(name, user.email, phoneNumber, password, avatarLink)
     );

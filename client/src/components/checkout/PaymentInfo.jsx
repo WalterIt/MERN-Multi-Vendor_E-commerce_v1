@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styles from "../../styles/styles";
+import { RxCross1 } from "react-icons/rx";
 import {
   CardNumberElement,
   CardCvcElement,
@@ -7,7 +8,7 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
-// import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 const PaymentInfo = ({
   user,
@@ -149,18 +150,22 @@ const PaymentInfo = ({
           </h4>
         </div>
 
-        {/* pay with payement */}
+        {/* pay with Paypal */}
         {select === 2 ? (
           <div className="w-full flex border-b">
             <div
-              className={`${styles.button} !bg-[#f63b60] text-white h-[45px] rounded-[5px] cursor-pointer text-[18px] font-[600]`}
+              className={`${styles.button} !bg-[#f63b60] text-white h-[45px] rounded-[5px] cursor-pointer text-[18px] 
+              font-[600]`}
               onClick={() => setOpen(true)}
             >
               Pay Now
             </div>
             {open && (
               <div className="w-full fixed top-0 left-0 bg-[#00000039] h-screen flex items-center justify-center z-[99999]">
-                <div className="w-full 800px:w-[40%] h-screen 800px:h-[80vh] bg-white rounded-[5px] shadow flex flex-col justify-center p-8 relative overflow-y-scroll">
+                <div
+                  className="w-full 800px:w-[40%] h-screen 800px:h-[80vh] bg-white rounded-[5px] shadow flex flex-col 
+                justify-center p-8 relative overflow-y-scroll"
+                >
                   <div className="w-full flex justify-end p-3">
                     <RxCross1
                       size={30}
@@ -168,10 +173,9 @@ const PaymentInfo = ({
                       onClick={() => setOpen(false)}
                     />
                   </div>
-                  {/* <PayPalScriptProvider
+                  <PayPalScriptProvider
                     options={{
-                      "client-id":
-                        "Aczac4Ry9_QA1t4c7TKH9UusH3RTe6onyICPoCToHG10kjlNdI-qwobbW9JAHzaRQwFMn2-k660853jn",
+                      "client-id": import.meta.env.VITE_PAYPAL_CLIENT_ID,
                     }}
                   >
                     <PayPalButtons
@@ -179,7 +183,7 @@ const PaymentInfo = ({
                       onApprove={onApprove}
                       createOrder={createOrder}
                     />
-                  </PayPalScriptProvider> */}
+                  </PayPalScriptProvider>
                 </div>
               </div>
             )}
