@@ -6,20 +6,20 @@ import {
   AiOutlineCamera,
   AiOutlineDelete,
 } from "react-icons/ai";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getAllOrdersUser } from "../../redux/actions/order";
 
 const AllOrders = () => {
-  const orders = [
-    {
-      _id: "7463hvbfbhfbrtr28820221",
-      orderItems: [
-        {
-          name: "Iphone 14 pro max",
-        },
-      ],
-      totalPrice: 120,
-      orderStatus: "Processing",
-    },
-  ];
+  const { user } = useSelector((state) => state.user);
+  const { orders } = useSelector((state) => state.order);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllOrdersUser(user._id));
+  }, [dispatch]);
+
+  console.log(orders);
 
   const columns = [
     { field: "id", headerName: "Order ID", minWidth: 150, flex: 1 },
@@ -60,7 +60,7 @@ const AllOrders = () => {
       renderCell: (params) => {
         return (
           <>
-            <Link to={`/order/${params.id}`}>
+            <Link to={`/user/order/${params.id}`}>
               <Button>
                 <AiOutlineArrowRight size={20} />
               </Button>
@@ -77,12 +77,12 @@ const AllOrders = () => {
     orders.forEach((item) => {
       row.push({
         id: item._id,
-        itemsQty: item.orderItems.length,
+        itemsQty: item.cart?.length,
         total: new Intl.NumberFormat("en-US", {
           style: "currency",
           currency: "USD",
-        }).format(item.totalPrice),
-        status: item.orderStatus,
+        }).format(item.cart[0]?.discountPrice || item.cart[0]?.originalPrice),
+        status: item.status,
       });
     });
 

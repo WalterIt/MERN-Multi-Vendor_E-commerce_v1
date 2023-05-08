@@ -3,6 +3,7 @@ import { userReducer } from "./reducers/user";
 import { sellerReducer } from "./reducers/seller";
 import { productReducer } from "./reducers/product";
 import { eventReducer } from "./reducers/event";
+import { orderReducer } from "./reducers/order";
 import {
   persistStore,
   persistReducer,
@@ -30,6 +31,7 @@ const rootReducer = combineReducers({
   events: eventReducer,
   cart: cartReducer,
   wishlist: wishlistReducer,
+  order: orderReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
