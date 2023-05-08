@@ -1,27 +1,22 @@
 import { Link, useParams } from "react-router-dom";
-import styles from "../../styles/styles";
+import styles from "../styles/styles";
 import { BsFillBagFill } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { getAllOrdersShop } from "../../redux/actions/order";
+import { getAllOrdersUser } from "../redux/actions/order";
 
-const ShopOrderDetails = () => {
-  const { user } = useSelector((state) => state.seller);
-  const seller = user;
+const OrderDetails = () => {
+  const { user } = useSelector((state) => state.user);
   const { orders } = useSelector((state) => state.order);
   const dispatch = useDispatch();
   const [status, setStatus] = useState("");
   const { id } = useParams();
 
   useEffect(() => {
-    dispatch(getAllOrdersShop(seller._id));
+    dispatch(getAllOrdersUser(user._id));
   }, [dispatch]);
 
-  //   console.log(orders);
-
   const data = orders && orders.find((item) => item._id === id);
-
-  console.log(data);
 
   const handleOrderUpdateStatus = (e) => {
     e.preventDefault();
@@ -34,13 +29,6 @@ const ShopOrderDetails = () => {
           <BsFillBagFill size={30} color="crimson" />
           <h1 className="pl-2 text-[25px] ">Order Details</h1>
         </div>
-        <Link to="/dashboard/orders">
-          <div
-            className={`${styles.button} !bg-[#fce1e6] !rounded text-[#e94560] hover:scale-105 hover:text-[crimson] font-[600] !h-[45px] text-[18px] `}
-          >
-            Order List
-          </div>
-        </Link>
       </div>
       <div className="w-full flex items-center justify-between pt-6">
         <h5 className="text-[#000b] ">
@@ -69,6 +57,11 @@ const ShopOrderDetails = () => {
                 x {item.quantity}
               </h5>
             </div>
+            {data?.status === "Delivered" && (
+              <div className={`${styles.button} text-white `}>
+                Write a Review
+              </div>
+            )}
           </div>
         ))}
       <div className="border-t w full text-right">
@@ -95,16 +88,16 @@ const ShopOrderDetails = () => {
         <div className="w-full 800px:w-[60%] ">
           <h4 className="pt-3 text-[20px] font-[600] ">Shipping Address</h4>
           <h4 className="pt-3 text-[20px]  ">
-            {data.shippingAddress.address1}, {data.shippingAddress.address2},{" "}
-            {data.shippingAddress.city}, {data.shippingAddress.country},{" "}
-            {data.shippingAddress.zipCode}
+            {data?.shippingAddress?.address1}, {data?.shippingAddress?.address2}
+            , {data?.shippingAddress?.city}, {data?.shippingAddress?.country},{" "}
+            {data?.shippingAddress?.zipCode}
           </h4>
           <h4 className="pt-3 text-[20px]  ">
-            <span className="font-[600] ">User Name: </span> {data.user.name}
+            <span className="font-[600] ">User Name: </span> {data?.user?.name}
           </h4>
           <h4 className="pt-3 text-[20px]  ">
             <span className="font-[600] ">User Phone Number: </span>
-            {data.user.phoneNumber}
+            {data?.user?.phoneNumber}
           </h4>
         </div>
         <div className="w-full 800px:w-[40%] ">
@@ -114,45 +107,11 @@ const ShopOrderDetails = () => {
           </h4>
         </div>
       </div>
-      <h4 className="pt-11 text-[20px] font-[600] ">Order Status:</h4>
-      <select
-        value={status}
-        onChange={(e) => setStatus(e.target.value)}
-        className="w-[250px] mt-2 border h-[35px] rounded "
-      >
-        {[
-          "Processing",
-          "Transfered to delivery Partner",
-          "Shipping",
-          "Received",
-          "On the way",
-          "Delivered",
-        ]
-          .slice(
-            [
-              "Processing",
-              "Transfered to delivery Partner",
-              "Shipping",
-              "Received",
-              "On the way",
-              "Delivered",
-            ].indexOf(data?.status)
-          )
-          .map((option, i) => (
-            <option value={option} key={i}>
-              {option}
-            </option>
-          ))}
-      </select>
-      <div
-        className={`${styles.button} !bg-[#fce1e6] !rounded text-[#e94560] hover:scale-105 hover:text-[crimson] 
-        font-[600] !h-[45px] text-[18px] mt-8 `}
-        onClick={handleOrderUpdateStatus}
-      >
-        Update Status
+      <div className={`${styles.button} text-white mt-12 hover:scale-105 `}>
+        Send a Message
       </div>
     </div>
   );
 };
 
-export default ShopOrderDetails;
+export default OrderDetails;
