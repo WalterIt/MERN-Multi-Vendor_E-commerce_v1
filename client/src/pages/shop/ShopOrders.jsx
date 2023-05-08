@@ -8,15 +8,16 @@ import {
 } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getAllOrdersUser } from "../../redux/actions/order";
+import { getAllOrdersShop, getAllOrdersUser } from "../../redux/actions/order";
 
-const AllOrders = () => {
-  const { user } = useSelector((state) => state.user);
+const ShopOrders = () => {
+  const { user } = useSelector((state) => state.seller);
+  const seller = user;
   const { orders } = useSelector((state) => state.order);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getAllOrdersUser(user._id));
+    dispatch(getAllOrdersShop(seller._id));
   }, [dispatch]);
 
   const columns = [
@@ -85,7 +86,7 @@ const AllOrders = () => {
     });
 
   return (
-    <div className="pl-8 pt-1">
+    <div className="w-full pl-8 pt-1">
       <DataGrid
         rows={row}
         getRowId={(row) => row.id}
@@ -98,4 +99,4 @@ const AllOrders = () => {
   );
 };
 
-export default AllOrders;
+export default ShopOrders;

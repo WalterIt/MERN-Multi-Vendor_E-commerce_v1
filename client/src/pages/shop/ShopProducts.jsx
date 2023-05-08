@@ -13,7 +13,9 @@ import Loader from "../../components/layout/Loader";
 const ShopProducts = () => {
   const { user } = useSelector((state) => state.seller);
   const seller = user;
-  const { products, isLoading } = useSelector((state) => state.products ?? {});
+  const { allProducts, isLoading } = useSelector(
+    (state) => state.products ?? {}
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -94,8 +96,8 @@ const ShopProducts = () => {
 
   const row = [];
 
-  products &&
-    products.forEach((item) => {
+  allProducts &&
+    allProducts.forEach((item) => {
       row.push({
         id: item._id,
         name: item.name,

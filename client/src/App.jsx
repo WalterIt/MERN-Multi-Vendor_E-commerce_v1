@@ -23,6 +23,7 @@ import ShopDashboardPage from "./pages/shop/ShopDashboardPage";
 import ShopCreateProduct from "./pages/shop/ShopCreateProduct";
 import ShopCreateEvents from "./pages/shop/ShopCreateEvents";
 import ShopProducts from "./pages/shop/ShopProducts";
+import ShopOrders from "./pages/shop/ShopOrders";
 import ShopEvents from "./pages/shop/ShopEvents";
 import ShopCoupons from "./pages/shop/ShopCoupons";
 import ShopPreviewPage from "./pages/shop/ShopPreviewPage";
@@ -144,6 +145,7 @@ function App() {
             element={<ShopCreateProduct />}
           />
           <Route path="/dashboard/products" element={<ShopProducts />} />
+          <Route path="/dashboard/orders" element={<ShopOrders />} />
           <Route
             path="/dashboard/create-event"
             element={<ShopCreateEvents />}

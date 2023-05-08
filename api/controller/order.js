@@ -4,7 +4,10 @@ const Order = require("../model/order");
 const router = express.Router();
 const ErrorHandler = require("../utils/ErrorHandler");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
-const { isAuthenticated } = require("../middleware/auth");
+const {
+  isAuthenticated,
+  isSellerAuthenticated,
+} = require("../middleware/auth");
 const Product = require("../model/product");
 
 // Create New order
@@ -54,9 +57,32 @@ router.post(
 // Get all Order of a User
 router.get(
   "/getorders/:userId",
+  isAuthenticated,
   catchAsyncErrors(async (req, res, next) => {
     try {
       const orders = await Order.find({ "user._id": req.params.userId }).sort({
+        createdAt: -1,
+      });
+
+      res.status(200).json({
+        success: true,
+        orders,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
+
+// Get all Order of a Seller
+router.get(
+  "/getorders-seller/:shopId",
+  isSellerAuthenticated,
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const orders = await Order.find({
+        "cart.shopId": req.params.shopId,
+      }).sort({
         createdAt: -1,
       });
 

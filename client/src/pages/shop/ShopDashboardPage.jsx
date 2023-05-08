@@ -13,6 +13,9 @@ const ShopDashboardPage = () => {
       case "/dashboard":
         setActive(1);
         break;
+      case "/dashboard/orders":
+        setActive(2);
+        break;
       case "/dashboard/products":
         setActive(3);
         break;

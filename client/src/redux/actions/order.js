@@ -1,7 +1,7 @@
 import axios from "axios";
 import { server } from "../../server";
 
-// Get All Products Shop
+// Get All Order from an User
 export const getAllOrdersUser = (userId) => async (dispatch) => {
   try {
     dispatch({
@@ -16,6 +16,28 @@ export const getAllOrdersUser = (userId) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "getAllOrdersUserFailure",
+      payload: error.response?.data?.message,
+    });
+  }
+};
+
+// Get All Order from a Shop
+export const getAllOrdersShop = (shopId) => async (dispatch) => {
+  try {
+    dispatch({
+      type: "getAllOrdersSellerRequest",
+    });
+    const { data } = await axios.get(
+      `${server}/order/getorders-seller/${shopId}`
+    );
+
+    dispatch({
+      type: "getAllOrdersSellerSuccess",
+      payload: data?.orders,
+    });
+  } catch (error) {
+    dispatch({
+      type: "getAllOrdersSellerFailure",
       payload: error.response?.data?.message,
     });
   }
