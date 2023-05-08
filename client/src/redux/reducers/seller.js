@@ -11,6 +11,7 @@ export const sellerReducer = createReducer(initialState, {
   },
   LoginSellerSuccess: (state, action) => {
     state.user = action.payload;
+    state.isSellerAuthenticated = true;
   },
 
   LoadSellerSuccess: (state, action) => {
