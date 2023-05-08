@@ -1,15 +1,19 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import styles from "../../styles/styles";
 import { BsFillBagFill } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { getAllOrdersShop } from "../../redux/actions/order";
+import axios from "axios";
+import server from "../../server";
+import { toast } from "react-toastify";
 
 const ShopOrderDetails = () => {
   const { user } = useSelector((state) => state.seller);
   const seller = user;
   const { orders } = useSelector((state) => state.order);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [status, setStatus] = useState("");
   const { id } = useParams();
 
@@ -23,8 +27,17 @@ const ShopOrderDetails = () => {
 
   console.log(data);
 
-  const handleOrderUpdateStatus = (e) => {
+  const handleOrderUpdateStatus = async (e) => {
     e.preventDefault();
+    await axios
+      .put(`${server}/order/update-order-status/${id}`, { status })
+      .then((res) => {
+        toast.success("Order updated successfully!");
+        navigate("/dashboard/orders");
+      })
+      .catch((err) =>
+        toast.error((error) => toast.error(error.response.data.message))
+      );
   };
 
   return (

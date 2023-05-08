@@ -96,4 +96,46 @@ router.get(
   })
 );
 
+// Update Order Status for Seller
+router.put(
+  "/update-order-status/:id",
+  isSellerAuthenticated,
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const order = await Order.findById(req.params.id);
+      if (!order) return next(new ErrorHandler("Order not found!", 400));
+      if (req.body.status === "Transfered to delivery Partner") {
+        order.cart.forEach(async (order) => {
+          await updateProduct(order._id, order.quantity);
+        });
+      }
+
+      order.status = req.body.status;
+
+      if (req.body.status === "Delivered") {
+        order.deliveredAt = Date.now();
+        order.paymentInfo.status = "Succeeded";
+      }
+
+      await order.save({ validateBeforeSave: false });
+
+      res.status(200).json({
+        success: true,
+        order,
+      });
+
+      async function updateProduct(id, quantity) {
+        const product = await Product.findById(id);
+
+        product.stock -= quantity;
+        product.soldOut += quantity;
+
+        await product.save({ validateBeforeSave: false });
+      }
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
+
 module.exports = router;

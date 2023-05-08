@@ -58,7 +58,7 @@ const OrderDetails = () => {
               </h5>
             </div>
             {data?.status === "Delivered" && (
-              <div className={`${styles.button} text-white `}>
+              <div className={`${styles.button} text-white hover:scale-105 `}>
                 Write a Review
               </div>
             )}
