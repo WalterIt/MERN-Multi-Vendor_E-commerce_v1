@@ -29,6 +29,20 @@ const ProductDetails = ({ data }) => {
   const [select, setSelect] = useState(0);
   const navigate = useNavigate();
 
+  const totalReviewsLength =
+    allProducts &&
+    allProducts?.reduce((acc, product) => acc + product.reviews.length, 0);
+
+  const totalRatings =
+    allProducts &&
+    allProducts?.reduce(
+      (acc, product) =>
+        acc + product.reviews.reduce((sum, review) => sum + review.rating, 0),
+      0
+    );
+
+  const averageRating = totalRatings / totalReviewsLength || 0;
+
   useEffect(() => {
     dispatch(getAllProductsShop(data?.shop?._id));
   }, [dispatch, data]);
@@ -186,7 +200,9 @@ const ProductDetails = ({ data }) => {
                         {data.shop.name}
                       </h3>
                     </Link>
-                    <h5 className="pb-3 text-[15px] ">(4/5) Ratings</h5>
+                    <h5 className="pb-3 text-[15px] ">
+                      ({averageRating}/5) Ratings
+                    </h5>
                   </div>
                   <div
                     className={`${styles.button} bg-[#6443d1] hover:scale-105 mt-4 !rounded !h-11`}
@@ -201,7 +217,12 @@ const ProductDetails = ({ data }) => {
               </div>
             </div>
           </div>
-          <ProductDetailsInfo data={data} products={allProducts} />
+          <ProductDetailsInfo
+            data={data}
+            products={allProducts}
+            totalReviewsLength={totalReviewsLength}
+            averageRating={averageRating}
+          />
           <br />
           <br />
         </div>

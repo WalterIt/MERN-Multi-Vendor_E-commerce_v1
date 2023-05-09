@@ -3,8 +3,14 @@ import styles from "../../styles/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { getAllProductsShop } from "../../redux/actions/product";
+import Ratings from "./Ratings";
 
-const ProductDetailsInfo = ({ data, products }) => {
+const ProductDetailsInfo = ({
+  data,
+  products,
+  totalReviewsLength,
+  averageRating,
+}) => {
   const [active, setActive] = useState(1);
 
   return (
@@ -54,23 +60,26 @@ const ProductDetailsInfo = ({ data, products }) => {
 
       {active === 2 ? (
         <>
-          <p className="w-full justify-center min-h-[40vh] flex flex-col items-center text-[18px] font-semibold ">
+          <div className="w-full py-4 min-h-[40vh] flex flex-col items-center text-[18px] font-semibold overflow-y-hidden ">
             {data &&
               data.reviews?.map((item, i) => (
-                <div className="w-full flex my-2">
+                <div key={i} className="w-full flex my-2">
                   <img
                     src={item.user.avatar}
                     alt={item.user.name}
-                    className="w-[50px] h-auto object-cover rounded-full "
+                    className="w-[50px] h-[50px] object-cover rounded-full "
                   />
                   <div className="pl-2">
-                    <h1 className="">{item.user.name}</h1>
+                    <div className="w-full flex items-center">
+                      <h1 className="mr-3">{item.user.name}</h1>
+                      <Ratings rating={data?.ratings} />
+                    </div>
                     <p className="">{item.comment} </p>
                   </div>
                 </div>
               ))}
             {data && data.reviews.length === 0 && <h5>No Reviews Yet!</h5>}
-          </p>
+          </div>
         </>
       ) : null}
 
@@ -90,7 +99,9 @@ const ProductDetailsInfo = ({ data, products }) => {
                   <Link to={`/shop/preview/${data.shop._id}`}>
                     <h3 className={`${styles.shop_name}`}>{data.shop.name}</h3>
                   </Link>
-                  <h5 className="pb-2 text-[15px]">(4/5) Ratings</h5>
+                  <h5 className="pb-2 text-[15px]">
+                    ({averageRating}/5) Ratings
+                  </h5>
                 </div>
               </div>
               <p className="pt-2">{data.shop.description}</p>
@@ -109,7 +120,7 @@ const ProductDetailsInfo = ({ data, products }) => {
                 </h5>
                 <h5 className="font-[600] pt-3 ">
                   Total Reviews:
-                  <span className="font-[500] "> 256</span>
+                  <span className="font-[500] "> {totalReviewsLength}</span>
                 </h5>
                 <Link to={`/shop/preview/${data.shop._id}`}>
                   <div

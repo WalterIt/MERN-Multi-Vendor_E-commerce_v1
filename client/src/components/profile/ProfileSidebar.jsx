@@ -23,7 +23,7 @@ const ProfileSidebar = ({ active, setActive }) => {
         toast.success(res.data.message);
         localStorage.clear();
         navigate("/");
-        // window.location.reload();
+        window.location.reload();
       })
       .catch((error) => {
         console.log(error.res.data.message);
