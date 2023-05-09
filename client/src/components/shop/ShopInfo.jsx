@@ -10,8 +10,7 @@ const ShopInfo = ({ isOwner }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { allProducts } = useSelector((state) => state.products);
-  const { user } = useSelector((state) => state.seller);
-  const seller = user;
+  const { seller } = useSelector((state) => state.seller);
   const { id } = useParams();
   const [data, setData] = useState({});
   // const [isLoading, setIsLoading] = useState(false);

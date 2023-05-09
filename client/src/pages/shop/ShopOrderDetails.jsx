@@ -9,8 +9,7 @@ import server from "../../server";
 import { toast } from "react-toastify";
 
 const ShopOrderDetails = () => {
-  const { user } = useSelector((state) => state.seller);
-  const seller = user;
+  const { seller } = useSelector((state) => state.seller);
   const { orders } = useSelector((state) => state.order);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -21,11 +20,7 @@ const ShopOrderDetails = () => {
     dispatch(getAllOrdersShop(seller._id));
   }, [dispatch]);
 
-  //   console.log(orders);
-
   const data = orders && orders.find((item) => item._id === id);
-
-  console.log(data);
 
   const handleOrderUpdateStatus = async (e) => {
     e.preventDefault();
@@ -66,7 +61,7 @@ const ShopOrderDetails = () => {
       {/* ORDER ITEMS */}
       {data &&
         data?.cart.map((item, i) => (
-          <div className="flex w-full items-start py-5">
+          <div key={i} className="flex w-full items-start py-5">
             <img
               src={item.images[0]}
               alt={item.name}

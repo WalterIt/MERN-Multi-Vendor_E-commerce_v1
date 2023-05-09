@@ -16,8 +16,7 @@ import server from "../../server";
 import { toast } from "react-toastify";
 
 const ShopCoupons = () => {
-  const { user } = useSelector((state) => state.seller);
-  const seller = user;
+  const { seller } = useSelector((state) => state.seller);
   const { products } = useSelector((state) => state.products ?? {});
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);

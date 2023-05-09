@@ -6,8 +6,8 @@ import { Link, useNavigate } from "react-router-dom";
 // import { server } from "../../server.js";
 import { toast } from "react-toastify";
 // import store from "../../redux/store";
-import { loginSeller } from "../../redux/actions/user";
 import { useDispatch, useSelector } from "react-redux";
+import { loadSeller, loginSeller } from "../../redux/actions/seller";
 
 const LoginShopPage = () => {
   const dispatch = useDispatch();
@@ -22,8 +22,10 @@ const LoginShopPage = () => {
 
     const formData = { email, password };
     dispatch(loginSeller(formData));
-    if (error) toast(error);
+    if (error) toast(error.message);
     if (success) toast.success("Login Successfull!");
+
+    dispatch(loadSeller());
 
     navigate("/dashboard");
 
@@ -44,19 +46,19 @@ const LoginShopPage = () => {
     //     console.log(err.response?.data);
     //   });
   };
-  // const { isSellerAuthenticated } = useSelector((state) => state.seller);
+  const { isSellerAuthenticated } = useSelector((state) => state.seller);
 
   // if (isSellerAuthenticated) {
   //   // navigate("/dashboard");
   //   navigate(`/dashboard`);
   // }
 
-  // useEffect(() => {
-  //   if (isSellerAuthenticated) {
-  //     navigate("/dashboard");
-  //     // navigate(`/shop/${seller._id}`);
-  //   }
-  // }, [isSellerAuthenticated, seller, isLoading]);
+  useEffect(() => {
+    if (isSellerAuthenticated) {
+      navigate("/dashboard");
+      // navigate(`/shop/${seller._id}`);
+    }
+  }, [isSellerAuthenticated]);
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">

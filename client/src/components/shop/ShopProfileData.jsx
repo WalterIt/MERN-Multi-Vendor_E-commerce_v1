@@ -10,8 +10,7 @@ const ShopProfileData = ({ isOwner }) => {
   const [active, setActive] = useState(1);
   const { allProducts } = useSelector((state) => state.products);
   const { events } = useSelector((state) => state.events);
-  const { user } = useSelector((state) => state.seller);
-  const seller = user;
+  const { seller } = useSelector((state) => state.seller);
   const { id } = useParams();
   const dispatch = useDispatch();
 

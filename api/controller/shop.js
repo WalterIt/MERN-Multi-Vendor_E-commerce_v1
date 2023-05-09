@@ -142,6 +142,7 @@ router.post(
           new ErrorHandler("Please provide the correct information", 400)
         );
       }
+      // console.log(shop);
 
       sendShopToken(shop, 201, res);
     } catch (error) {
@@ -156,7 +157,6 @@ router.get(
   isSellerAuthenticated,
   catchAsyncErrors(async (req, res, next) => {
     try {
-      //   console.log(req.seller);
       const seller = await Shop.findById(req.seller._id);
 
       if (!seller) {
@@ -169,6 +169,7 @@ router.get(
       });
     } catch (error) {
       return next(new ErrorHandler(error.message, 500));
+      console.log(error);
     }
   })
 );

@@ -15,8 +15,7 @@ import { createProduct } from "../../redux/actions/product";
 import { useEffect } from "react";
 
 const ShopCreateProduct = () => {
-  const { user } = useSelector((state) => state.seller);
-  const seller = user;
+  const { seller } = useSelector((state) => state.seller);
   const { success, error } = useSelector((state) => state.products);
   const navigate = useNavigate();
   const dispatch = useDispatch();

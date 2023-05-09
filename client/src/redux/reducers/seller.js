@@ -6,14 +6,24 @@ const initialState = {
 };
 
 export const sellerReducer = createReducer(initialState, {
-  LoadSellerRequest: (state) => {
+  LoginSellerRequest: (state) => {
     state.isLoading = true;
   },
   LoginSellerSuccess: (state, action) => {
-    state.user = action.payload;
     state.isSellerAuthenticated = true;
+    state.isLoading = false;
+    state.seller = action.payload;
+  },
+  LoginSellerFailure: (state, action) => {
+    state.isSellerAuthenticated = false;
+    state.isLoading = false;
+    state.error = action?.payload;
   },
 
+  // Load a Seller
+  LoadSellerRequest: (state) => {
+    state.isLoading = true;
+  },
   LoadSellerSuccess: (state, action) => {
     state.isSellerAuthenticated = true;
     state.isLoading = false;

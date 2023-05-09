@@ -11,8 +11,7 @@ import { Link } from "react-router-dom";
 import Loader from "../../components/layout/Loader";
 
 const ShopProducts = () => {
-  const { user } = useSelector((state) => state.seller);
-  const seller = user;
+  const { seller } = useSelector((state) => state.seller);
   const { allProducts, isLoading } = useSelector(
     (state) => state.products ?? {}
   );

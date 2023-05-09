@@ -20,6 +20,7 @@ exports.isAuthenticated = catchAsyncErrors(async (req, res, next) => {
 
 exports.isSellerAuthenticated = catchAsyncErrors(async (req, res, next) => {
   const { SellerToken } = req.cookies;
+  // console.log(req.cookies);
 
   if (!SellerToken) {
     return next(new ErrorHandler("Please login to continue", 401));

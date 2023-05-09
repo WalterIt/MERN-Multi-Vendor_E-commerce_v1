@@ -7,8 +7,7 @@ import { Link } from "react-router-dom";
 import { BiMessageSquareDetail } from "react-icons/bi";
 
 const DashboardHeader = () => {
-  const { user } = useSelector((state) => state.seller);
-  const seller = user;
+  const { seller } = useSelector((state) => state.seller);
 
   return (
     <div className="w-full h-[80px] bg-white shadow sticky top-0 left-0 z-30 flex items-center justify-between px-4">

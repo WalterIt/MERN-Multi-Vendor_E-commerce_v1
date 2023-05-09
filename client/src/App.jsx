@@ -41,7 +41,6 @@ import { getAllEvents } from "./redux/actions/event";
 import server from "./server";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-
 axios.defaults.withCredentials = true;
 
 function App() {

@@ -11,8 +11,7 @@ import { useEffect } from "react";
 import { getAllOrdersShop, getAllOrdersUser } from "../../redux/actions/order";
 
 const ShopOrders = () => {
-  const { user } = useSelector((state) => state.seller);
-  const seller = user;
+  const { seller } = useSelector((state) => state.seller);
   const { orders } = useSelector((state) => state.order);
   const dispatch = useDispatch();
 

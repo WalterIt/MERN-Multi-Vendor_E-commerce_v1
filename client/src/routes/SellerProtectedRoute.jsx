@@ -6,12 +6,11 @@ const SellerProtectedRoute = ({ children }) => {
   const { isLoading, isSellerAuthenticated } = useSelector(
     (state) => state.seller
   );
-
-  if (isLoading) {
+  if (isLoading === true) {
     return <Loader />;
   } else {
     if (!isSellerAuthenticated) {
-      return <Navigate to={"/login-shop"} replace />;
+      return <Navigate to={`/login-shop`} replace />;
     }
     return children;
   }

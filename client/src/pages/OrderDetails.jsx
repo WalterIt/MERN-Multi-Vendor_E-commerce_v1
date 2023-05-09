@@ -41,7 +41,7 @@ const OrderDetails = () => {
       {/* ORDER ITEMS */}
       {data &&
         data?.cart.map((item, i) => (
-          <div className="flex w-full items-start py-5">
+          <div key={i} className="flex w-full items-start py-5">
             <img
               src={item.images[0]}
               alt={item.name}
@@ -58,7 +58,9 @@ const OrderDetails = () => {
               </h5>
             </div>
             {data?.status === "Delivered" && (
-              <div className={`${styles.button} text-white hover:scale-105 `}>
+              <div
+                className={`${styles.button} !w-[170px] text-white hover:scale-105 `}
+              >
                 Write a Review
               </div>
             )}

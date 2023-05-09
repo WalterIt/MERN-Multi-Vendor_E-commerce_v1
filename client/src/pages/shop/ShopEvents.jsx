@@ -8,8 +8,7 @@ import Loader from "../../components/layout/Loader";
 import { deleteEventShop, getAllEventsShop } from "../../redux/actions/event";
 
 const ShopEvents = () => {
-  const { user } = useSelector((state) => state.seller);
-  const seller = user;
+  const { seller } = useSelector((state) => state.seller);
   const { events, isLoading } = useSelector((state) => state.events ?? {});
   const dispatch = useDispatch();
 
