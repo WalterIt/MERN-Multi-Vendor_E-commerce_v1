@@ -54,8 +54,22 @@ const ProductDetailsInfo = ({ data, products }) => {
 
       {active === 2 ? (
         <>
-          <p className="w-full justify-center min-h-[40vh] flex items-center text-[18px] font-semibold ">
-            No Reviews Yet!
+          <p className="w-full justify-center min-h-[40vh] flex flex-col items-center text-[18px] font-semibold ">
+            {data &&
+              data.reviews?.map((item, i) => (
+                <div className="w-full flex my-2">
+                  <img
+                    src={item.user.avatar}
+                    alt={item.user.name}
+                    className="w-[50px] h-auto object-cover rounded-full "
+                  />
+                  <div className="pl-2">
+                    <h1 className="">{item.user.name}</h1>
+                    <p className="">{item.comment} </p>
+                  </div>
+                </div>
+              ))}
+            {data && data.reviews.length === 0 && <h5>No Reviews Yet!</h5>}
           </p>
         </>
       ) : null}
@@ -99,7 +113,7 @@ const ProductDetailsInfo = ({ data, products }) => {
                 </h5>
                 <Link to={`/shop/preview/${data.shop._id}`}>
                   <div
-                    className={`${styles.button} !rounded-[4px] !h-[39.5px] mt-6`}
+                    className={`${styles.button} !rounded-[4px] hover:scale-105 !h-[39.5px] mt-6`}
                   >
                     <h4 className="text-white">Visit Shop</h4>
                   </div>

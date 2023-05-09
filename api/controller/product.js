@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const Product = require("../model/product");
+const Order = require("../model/order");
 const router = express.Router();
 const { upload } = require("../multer");
 const ErrorHandler = require("../utils/ErrorHandler");
@@ -9,7 +10,10 @@ const fs = require("fs");
 const jwt = require("jsonwebtoken");
 const sendMail = require("../utils/sendMail");
 const sendToken = require("../utils/jwtToken");
-const { isSellerAuthenticated } = require("../middleware/auth");
+const {
+  isSellerAuthenticated,
+  isAuthenticated,
+} = require("../middleware/auth");
 const sendShopToken = require("../utils/ShopToken");
 const Shop = require("../model/shop.js");
 
@@ -85,6 +89,60 @@ router.delete(
         success: true,
         message: "Product Deleted Successfully!",
       });
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 400));
+    }
+  })
+);
+
+// Create a Review for a Product
+router.put(
+  "/create-review",
+  isAuthenticated,
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const { user, rating, comment, productId, orderId } = req.body;
+
+      const product = await Product.findById(productId);
+
+      const review = { user, rating, comment, productId };
+
+      const isReviewed = await product.reviews.find(
+        (review) => review.user._id === req.user._id
+      );
+
+      if (isReviewed) {
+        product.reviews.forEach((review) => {
+          if (review.user._id === req.user._id) {
+            (review.rating = rating),
+              (review.comment = comment),
+              (review.user = user),
+              (review.productId = productId);
+          }
+        });
+      } else {
+        product.reviews.push(review);
+      }
+
+      let average = 0;
+
+      product.reviews.forEach((review) => {
+        average += review.rating;
+      });
+
+      product.ratings = average / product.reviews.length;
+
+      await product.save({ validateBeforeSave: false });
+
+      await Order.findByIdAndUpdate(
+        orderId,
+        {
+          $set: { "cart.$[elem].isReviewed": true },
+        },
+        { arrayFilters: [{ "elem._id": productId }], new: true }
+      );
+
+      res.status(200).json({ success: true, message: "Reviewed successfully" });
     } catch (error) {
       return next(new ErrorHandler(error.message, 400));
     }

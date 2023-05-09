@@ -164,7 +164,7 @@ const ProductDetails = ({ data }) => {
                   </div>
                 </div>
                 <div
-                  className={`${styles.button} !mt-6 !rounded !h-11 flex items-center`}
+                  className={`${styles.button} !mt-6 !rounded hover:scale-105 !h-11 flex items-center`}
                   onClick={() => handleAddToCart(data._id)}
                 >
                   <span className="text-white flex items-center">
@@ -189,7 +189,7 @@ const ProductDetails = ({ data }) => {
                     <h5 className="pb-3 text-[15px] ">(4/5) Ratings</h5>
                   </div>
                   <div
-                    className={`${styles.button} bg-[#6443d1] mt-4 !rounded !h-11`}
+                    className={`${styles.button} bg-[#6443d1] hover:scale-105 mt-4 !rounded !h-11`}
                     onClick={handleMessageSubmit}
                   >
                     <span className="text-white flex justify-center items-center">

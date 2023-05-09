@@ -72,7 +72,7 @@ const ShopInfo = ({ isOwner }) => {
 
       <div className="p-4">
         <h5 className="font-[600] ">Total Products</h5>
-        <h4 className="text-[#000000a6]">{allProducts.length} Products</h4>
+        <h4 className="text-[#000000a6]">{allProducts?.length} Products</h4>
       </div>
 
       <div className="p-4">
