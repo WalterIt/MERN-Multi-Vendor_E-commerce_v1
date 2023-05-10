@@ -1,33 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { MdOutlineTrackChanges } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllOrdersUser } from "../../redux/actions/order";
 
 const TrackOrder = () => {
-  const orders = [
-    {
-      _id: "7463hvbfbhfbrtr28820221",
-      orderItems: [
-        {
-          name: "Iphone 14 pro max",
-        },
-      ],
-      totalPrice: 120,
-      orderStatus: "Processing",
-    },
-  ];
+  const { user } = useSelector((state) => state.user);
+  const { orders } = useSelector((state) => state.order);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllOrdersUser(user._id));
+  }, [dispatch]);
 
   const columns = [
-    { field: "id", headerName: "Order ID", minWidth: 250, flex: 1 },
+    { field: "id", headerName: "Order ID", minWidth: 180, flex: 1.3 },
+
     {
       field: "status",
       headerName: "Status",
-      minWidth: 130,
+      minWidth: 150,
       flex: 0.5,
       cellClassName: (params) => {
         const status = params.field === "status" ? params.value : "";
-        return status === "Delivered" ? "#039d01" : "#f20000";
+        return status === "Delivered" ? "greenColor" : "redColor";
       },
     },
     {
@@ -45,17 +43,18 @@ const TrackOrder = () => {
       minWidth: 130,
       flex: 0.8,
     },
+
     {
       field: " ",
       flex: 1,
-      minWidth: 130,
+      minWidth: 150,
       headerName: "",
       type: "number",
       sortable: false,
       renderCell: (params) => {
         return (
           <>
-            <Link to={`/order/${params.id}`}>
+            <Link to={`/user/track/order/${params.id}`}>
               <Button>
                 <MdOutlineTrackChanges size={20} />
               </Button>
@@ -72,12 +71,12 @@ const TrackOrder = () => {
     orders.forEach((item) => {
       row.push({
         id: item._id,
-        itemsQty: item.orderItems.length,
+        itemsQty: item.cart?.length,
         total: new Intl.NumberFormat("en-US", {
           style: "currency",
           currency: "USD",
-        }).format(item.totalPrice),
-        status: item.orderStatus,
+        }).format(item.cart[0]?.discountPrice || item.cart[0]?.originalPrice),
+        status: item.status,
       });
     });
 

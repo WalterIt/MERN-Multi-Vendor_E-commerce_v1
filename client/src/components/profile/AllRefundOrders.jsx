@@ -1,22 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllOrdersUser } from "../../redux/actions/order";
 
 const AllRefundOrders = () => {
-  const orders = [
-    {
-      _id: "7463hvbfbhfbrtr28820221",
-      orderItems: [
-        {
-          name: "Iphone 14 pro max",
-        },
-      ],
-      totalPrice: 120,
-      orderStatus: "Processing",
-    },
-  ];
+  const { user } = useSelector((state) => state.user);
+  const { orders } = useSelector((state) => state.order);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllOrdersUser(user._id));
+  }, [dispatch]);
+
+  const eligibleOrders =
+    orders && orders.filter((order) => order.status === "Processing Refund");
 
   const columns = [
     { field: "id", headerName: "Order ID", minWidth: 250, flex: 1 },
@@ -24,7 +24,7 @@ const AllRefundOrders = () => {
     {
       field: "status",
       headerName: "Status",
-      minWidth: 130,
+      minWidth: 150,
       flex: 0.5,
       cellClassName: (params) => {
         const status = params.field === "status" ? params.value : "";
@@ -57,7 +57,7 @@ const AllRefundOrders = () => {
       renderCell: (params) => {
         return (
           <>
-            <Link to={`/order/${params.id}`}>
+            <Link to={`/user/order/${params.id}`}>
               <Button>
                 <AiOutlineArrowRight size={20} />
               </Button>
@@ -70,16 +70,19 @@ const AllRefundOrders = () => {
 
   const row = [];
 
-  orders &&
-    orders.forEach((item) => {
+  eligibleOrders &&
+    eligibleOrders.forEach((item, i) => {
       row.push({
         id: item._id,
-        itemsQty: item.orderItems.length,
+        itemsQty: item.cart?.length,
         total: new Intl.NumberFormat("en-US", {
           style: "currency",
           currency: "USD",
-        }).format(item.totalPrice),
-        status: item.orderStatus,
+        }).format(
+          (+item.cart[i].discountPrice || +item.cart[i].originalPrice) * 0.1 +
+            (+item.cart[i].discountPrice || +item.cart[i].originalPrice)
+        ),
+        status: item?.status,
       });
     });
 

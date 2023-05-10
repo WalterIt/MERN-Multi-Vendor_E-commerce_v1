@@ -20,12 +20,12 @@ const AllOrders = () => {
   }, [dispatch]);
 
   const columns = [
-    { field: "id", headerName: "Order ID", minWidth: 150, flex: 1 },
+    { field: "id", headerName: "Order ID", minWidth: 180, flex: 1.3 },
 
     {
       field: "status",
       headerName: "Status",
-      minWidth: 130,
+      minWidth: 150,
       flex: 0.5,
       cellClassName: (params) => {
         const status = params.field === "status" ? params.value : "";

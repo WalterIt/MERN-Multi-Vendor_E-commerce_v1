@@ -43,12 +43,22 @@ const OrderDetails = () => {
         setOpen(false);
       })
       .catch((error) => {
-        toast.error(error);
+        toast.error(error.response.data.message);
       });
   };
 
-  const handleOrderUpdateStatus = (e) => {
-    e.preventDefault();
+  const handleRefund = async (e) => {
+    await axios
+      .put(`${server}/order/order-refund/${id}`, {
+        status: "Processing Refund",
+      })
+      .then((res) => {
+        toast.success(res.data.message);
+        dispatch(getAllOrdersUser(user._id));
+      })
+      .catch((error) => {
+        toast.error(error.response.data.message);
+      });
   };
 
   return (
@@ -86,7 +96,7 @@ const OrderDetails = () => {
                 x {item.quantity}
               </h5>
             </div>
-            {item.isReviewed ? null : (
+            {item.isReviewed || item.status !== "Delivered" ? null : (
               <div
                 className={`${styles.button} !w-[170px] text-white hover:scale-105 `}
                 onClick={() => setOpen(true) || setSelectedItem(item)}
@@ -225,6 +235,14 @@ const OrderDetails = () => {
           <h4 className="pt-3 text-[20px]  ">
             Status: {data?.status ? data?.status : "Not Paid Yet!"}
           </h4>
+          {data && data.status === "Delivered" && (
+            <div
+              className={`${styles.button} text-white mt-12 hover:scale-105 `}
+              onClick={handleRefund}
+            >
+              Give a Refund
+            </div>
+          )}
         </div>
       </div>
       <div className={`${styles.button} text-white mt-12 hover:scale-105 `}>

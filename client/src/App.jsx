@@ -16,6 +16,7 @@ import ProfilePage from "./pages/ProfilePage";
 import OrderDetails from "./pages/OrderDetails";
 import CheckoutPage from "./pages/CheckoutPage";
 import PaymentPage from "./pages/PaymentPage";
+import TrackOrderDetails from "./pages/TrackOrderDetails";
 import OrderSuccessPage from "./pages/OrderSuccessPage";
 import CreateShopPage from "./pages/auth/CreateShopPage";
 import LoginShopPage from "./pages/auth/LoginShopPage";
@@ -41,6 +42,7 @@ import { getAllEvents } from "./redux/actions/event";
 import server from "./server";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import TrackOrder from "./components/profile/TrackOrder";
 axios.defaults.withCredentials = true;
 
 function App() {
@@ -122,6 +124,15 @@ function App() {
             element={
               <ProtectedRoute>
                 <OrderDetails />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/user/track/order/:id"
+            element={
+              <ProtectedRoute>
+                <TrackOrderDetails />
               </ProtectedRoute>
             }
           />
