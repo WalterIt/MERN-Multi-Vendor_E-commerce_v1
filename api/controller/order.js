@@ -163,4 +163,43 @@ router.put(
   })
 );
 
+// Accept the Refund Order by Seller
+router.put(
+  "/order-refund-success/:id",
+  isSellerAuthenticated,
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const order = await Order.findById(req.params.id);
+
+      if (!order) return next(new ErrorHandler("Order not found!", 400));
+
+      order.status = req.body.status;
+
+      await order.save({ validateBeforeSave: false });
+
+      if (req.body.status === "Refund Success") {
+        order.cart.forEach(async (order) => {
+          await updateProduct(order._id, order.quantity);
+        });
+      }
+
+      async function updateProduct(id, quantity) {
+        const product = await Product.findById(id);
+
+        product.stock += quantity;
+        product.soldOut -= quantity;
+
+        await product.save({ validateBeforeSave: false });
+      }
+
+      res.status(200).json({
+        success: true,
+        message: "Order Refunded Successfully!",
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
+
 module.exports = router;

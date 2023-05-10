@@ -30,6 +30,7 @@ import ShopOrderDetails from "./pages/shop/ShopOrderDetails";
 import ShopEvents from "./pages/shop/ShopEvents";
 import ShopCoupons from "./pages/shop/ShopCoupons";
 import ShopPreviewPage from "./pages/shop/ShopPreviewPage";
+import ShopRefunds from "./pages/shop/ShopRefunds";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import ProtectedRoute from "./routes/ProtectedRoute";
@@ -166,6 +167,7 @@ function App() {
           />
           <Route path="/dashboard/products" element={<ShopProducts />} />
           <Route path="/dashboard/orders" element={<ShopOrders />} />
+          <Route path="/dashboard/refunds" element={<ShopRefunds />} />
           <Route path="/dashboard/order/:id" element={<ShopOrderDetails />} />
           <Route
             path="/dashboard/create-event"

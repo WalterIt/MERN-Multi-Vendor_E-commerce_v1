@@ -15,39 +15,25 @@ const TrackOrderDetails = () => {
 
   const data = orders && orders.find((item) => item._id === id);
 
+  const statusMessages = {
+    Processing: "Your Order is Processing in Shop!",
+    "Transfered to delivery Partner":
+      "Your Order is on the way from Delivery Partner!",
+    Shipping: "Your Order has been Shipped!",
+    Received: "Your Order has been Delivered!",
+    "On the way": "Your Order has been Shipped!",
+    Delivered: "Your Order has been Delivered!",
+    "Processing Refund": "Your Refund is been Processing!",
+    "Refund Success": "Your Refund is Successful!",
+  };
+
+  const status = data?.status;
+
   return (
     <div className="w-full h-[60vh] flex justify-center items-center">
-      {data && data?.status === "Processing" ? (
-        <h1 className="text-center text-[20px] ">
-          Your Order is Processing in Shop!
-        </h1>
-      ) : data && data?.status === "Transfered to delivery Partner" ? (
-        <h1 className="text-center text-[20px] ">
-          Your Order is on the way from Delivery Partner!
-        </h1>
-      ) : data && data?.status === "Shipping" ? (
-        <h1 className="text-center text-[20px] ">
-          Your Order has been Shipped!
-        </h1>
-      ) : data && data?.status === "Received" ? (
-        <h1 className="text-center text-[20px] ">
-          Your Order has been Delivered!
-        </h1>
-      ) : data && data?.status === "On the way" ? (
-        <h1 className="text-center text-[20px] ">
-          Your Order has been Shipped!
-        </h1>
-      ) : data && data?.status === "Delivered" ? (
-        <h1 className="text-center text-[20px] ">
-          Your Order has been Delivered!
-        </h1>
-      ) : data && data?.status === "Processing Refund" ? (
-        <h1 className="text-center text-[20px] ">
-          Your Refund is been Processing!
-        </h1>
-      ) : data && data?.status === "Refund Success" ? (
-        <h1 className="text-center text-[20px] ">Your Refund is Successful!</h1>
-      ) : null}
+      {status && (
+        <h1 className="text-center text-[20px] ">{statusMessages[status]}</h1>
+      )}
     </div>
   );
 };

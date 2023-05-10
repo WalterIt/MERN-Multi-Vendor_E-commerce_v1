@@ -31,6 +31,9 @@ const ShopDashboardPage = () => {
       case "/dashboard/coupons":
         setActive(9);
         break;
+      case "/dashboard/refunds":
+        setActive(10);
+        break;
       // case '/contact':
       //   // code to handle contact page
       //   break;
