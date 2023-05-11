@@ -159,8 +159,10 @@ router.get(
     try {
       const seller = await Shop.findById(req.seller._id);
 
+      console.log(req.seller._id);
+
       if (!seller) {
-        return next(new ErrorHandler("User doesn't exists", 400));
+        return next(new ErrorHandler("Shop doesn't exists", 400));
       }
 
       res.status(200).json({
@@ -207,6 +209,48 @@ router.get(
       res.status(200).json({
         success: true,
         shop,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
+
+// Update shop Information
+router.put(
+  "/update-shop-info",
+  isSellerAuthenticated,
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const {
+        name,
+        email,
+        address,
+        zipCode,
+        phoneNumber,
+        description,
+        avatarLink,
+      } = req.body;
+      // console.log(req.body);
+
+      const seller = await Shop.findOne({ email }).select("-password");
+
+      if (!seller) {
+        return next(new ErrorHandler("Seller not found!", 400));
+      }
+
+      seller.name = name;
+      seller.address = address;
+      seller.description = description;
+      seller.zipCode = zipCode;
+      seller.phoneNumber = phoneNumber;
+      seller.avatar = avatarLink;
+
+      await seller.save();
+
+      res.status(201).json({
+        success: true,
+        seller,
       });
     } catch (error) {
       return next(new ErrorHandler(error.message, 500));

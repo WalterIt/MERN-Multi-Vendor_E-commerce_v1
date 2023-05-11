@@ -107,25 +107,27 @@ const ProfileContent = ({ active }) => {
                     src={URL.createObjectURL(avatar)}
                     alt={user?.name}
                     title={user?.name}
-                    className="w-[150px] h-[150px] object-cover rounded-full border-[3px] border-[#3ad132] "
+                    className="w-[150px] h-[150px] object-cover rounded-full cursor-pointer border-[3px] border-[#3ad132] "
                   />
                 ) : (
                   <img
                     src={user?.avatar}
                     alt={user?.name}
                     title={user?.name}
-                    className="w-[150px] h-[150px] object-cover rounded-full border-[3px] border-[#3ad132] "
+                    className="w-[150px] h-[150px] object-cover rounded-full cursor-pointer border-[3px] border-[#3ad132] "
                   />
                 )}
                 <div className="w-[30px] h-[30px] bg-[#E3E9EE] rounded-full flex items-center justify-center cursor-pointer absolute bottom-[5px] right-[5px]">
                   <input
                     type="file"
                     id="image"
-                    className="hidden"
+                    className="hidden cursor-pointer"
                     onChange={handleImageUpdate}
                   />
-                  <label htmlFor="image">
-                    <AiOutlineCamera />
+                  <label htmlFor="image" className="hover:cursor-pointer">
+                    <span className="hover:cursor-pointer">
+                      <AiOutlineCamera className="hover:cursor-pointer" />
+                    </span>
                   </label>
                 </div>
               </div>

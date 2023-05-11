@@ -30,7 +30,7 @@ export const loadSeller = () => async (dispatch) => {
     dispatch({
       type: "LoadSellerRequest",
     });
-    const { data } = await axios.get(`${server}/shop/getSeller`);
+    const { data } = await axios.get(`${server}/shop/getseller`);
     dispatch({
       type: "LoadSellerSuccess",
       payload: data.seller,

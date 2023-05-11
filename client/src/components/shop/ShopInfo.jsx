@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import styles from "../../styles/styles";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import server from "../../server";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -14,6 +14,8 @@ const ShopInfo = ({ isOwner }) => {
   const { id } = useParams();
   const [data, setData] = useState({});
   // const [isLoading, setIsLoading] = useState(false);
+
+  // console.log(seller);
 
   const handleLogout = () => {
     axios
@@ -31,7 +33,7 @@ const ShopInfo = ({ isOwner }) => {
 
   useEffect(() => {
     axios
-      .get(`${server}/shop/getshop-info/${id}`)
+      .get(`${server}/shop/getshop-info/${seller._id}`)
       .then((res) => {
         setData(res.data.shop);
         // setIsLoading(false);
@@ -49,25 +51,25 @@ const ShopInfo = ({ isOwner }) => {
       <div className="w-full h-auto py-5 px-2">
         <div className="w-full flex items-center justify-center">
           <img
-            src={data?.avatar}
-            alt={data?.name}
-            title={data?.name}
+            src={seller?.avatar}
+            alt={seller?.name}
+            title={seller?.name}
             className="w-[150px] h-[150px] object-fit rounded-full"
           />
         </div>
-        <h3 className="text-center py-2 text-[20px] ">{data.name}</h3>
+        <h3 className="text-center py-2 text-[20px] ">{seller.name}</h3>
         <p className="text-[16px] text-[#000000a6] p-[10px] flex items-center ">
-          {data.description}
+          {seller.description}
         </p>
       </div>
       <div className="p-4">
         <h5 className="font-[600] ">Address</h5>
-        <h4 className="text-[#000000a6]">{data.address}</h4>
+        <h4 className="text-[#000000a6]">{seller.address}</h4>
       </div>
 
       <div className="p-4">
         <h5 className="font-[600] ">Phone Number</h5>
-        <h4 className="text-[#000000a6]">{data.phoneNumber}</h4>
+        <h4 className="text-[#000000a6]">{seller.phoneNumber}</h4>
       </div>
 
       <div className="p-4">
@@ -86,11 +88,15 @@ const ShopInfo = ({ isOwner }) => {
       </div>
       {isOwner && (
         <div className="py-3 px-4">
-          <div className={`${styles.button} !w-full !h-[42px] !rounded `}>
-            <span className="text-white font-semibold tracking-widest">
-              Edit Shop
-            </span>
-          </div>
+          <Link to="/dashboard/shop/settings">
+            <div
+              className={`${styles.button} !w-full !h-[42px] hover:scale-105 !rounded `}
+            >
+              <span className="text-white font-semibold tracking-widest">
+                Edit Shop
+              </span>
+            </div>
+          </Link>
 
           <div
             className={`${styles.button} !bg-red-600 !w-full !h-[42px] !rounded `}

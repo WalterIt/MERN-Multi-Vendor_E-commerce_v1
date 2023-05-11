@@ -32,6 +32,7 @@ import ShopCoupons from "./pages/shop/ShopCoupons";
 import ShopPreviewPage from "./pages/shop/ShopPreviewPage";
 import ShopRefunds from "./pages/shop/ShopRefunds";
 import ShopDashboardHome from "./pages/shop/ShopDashboardHome";
+import ShopSettingsPage from "./pages/shop/ShopSettingsPage";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import ProtectedRoute from "./routes/ProtectedRoute";
@@ -150,6 +151,14 @@ function App() {
           element={
             <SellerProtectedRoute>
               <ShopHomePage />
+            </SellerProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard/shop/settings"
+          element={
+            <SellerProtectedRoute>
+              <ShopSettingsPage />
             </SellerProtectedRoute>
           }
         />
