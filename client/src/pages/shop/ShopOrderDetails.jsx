@@ -105,7 +105,10 @@ const ShopOrderDetails = () => {
                 }).format(
                   data.cart.reduce((total, item) => {
                     const price = item?.discountPrice || item?.originalPrice;
-                    return total + price * item.quantity;
+                    return (
+                      (total + price * item.quantity) * 0.1 +
+                      (total + price * item.quantity)
+                    );
                   }, 0)
                 )}
               </h5>

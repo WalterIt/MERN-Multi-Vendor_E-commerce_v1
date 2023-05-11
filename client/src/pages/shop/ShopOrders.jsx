@@ -25,7 +25,7 @@ const ShopOrders = () => {
     {
       field: "status",
       headerName: "Status",
-      minWidth: 130,
+      minWidth: 210,
       flex: 0.5,
       cellClassName: (params) => {
         const status = params.field === "status" ? params.value : "";

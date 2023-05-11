@@ -31,6 +31,7 @@ import ShopEvents from "./pages/shop/ShopEvents";
 import ShopCoupons from "./pages/shop/ShopCoupons";
 import ShopPreviewPage from "./pages/shop/ShopPreviewPage";
 import ShopRefunds from "./pages/shop/ShopRefunds";
+import ShopDashboardHome from "./pages/shop/ShopDashboardHome";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import ProtectedRoute from "./routes/ProtectedRoute";
@@ -154,13 +155,13 @@ function App() {
         />
 
         <Route
-          path="/dashboard"
           element={
             <SellerProtectedRoute>
               <ShopDashboardPage />
             </SellerProtectedRoute>
           }
         >
+          <Route path="/dashboard" element={<ShopDashboardHome />} />
           <Route
             path="/dashboard/create-product"
             element={<ShopCreateProduct />}
