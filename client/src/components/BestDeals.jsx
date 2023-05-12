@@ -12,12 +12,9 @@ const BestDeals = () => {
 
   useEffect(() => {
     const productData =
-      products &&
-      [...products].sort((a, b) => b.originalPrice - a.originalPrice);
+      products && [...products].sort((a, b) => b.soldOut - a.soldOut);
     setData(productData?.slice(0, 5));
   }, [products]);
-  // console.log(data);
-  // console.log(productData.slice(0, 5));
 
   return (
     <div>

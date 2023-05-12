@@ -28,17 +28,19 @@ const ShopDashboardHome = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    const totalIncomeWithoutTax = deliveredOrder?.reduce((acc, item) => {
-      const itemTotalPrice = item.cart.reduce((total, cartItem) => {
-        const price = cartItem?.discountPrice || cartItem?.originalPrice;
-        return total + price;
-      }, 0);
-      return acc + itemTotalPrice;
-    }, 0);
+    const totalIncomeWithoutTax = deliveredOrder
+      ? deliveredOrder?.reduce((acc, item) => {
+          const itemTotalPrice = item.cart.reduce((total, cartItem) => {
+            const price = cartItem?.discountPrice || cartItem?.originalPrice;
+            return total + price;
+          }, 0);
+          return acc + itemTotalPrice;
+        }, 0)
+      : 0;
 
-    const serviceCharge = totalIncomeWithoutTax * 0.1;
+    const serviceCharge = totalIncomeWithoutTax * 0.1 || 0;
 
-    const availableBalance = totalIncomeWithoutTax + serviceCharge;
+    const availableBalance = totalIncomeWithoutTax + serviceCharge || 0;
 
     setAvaibleBalance(availableBalance);
   }, [availableBalance]);

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import AllOrders from "./AllOrders";
 import AllRefundOrders from "./AllRefundOrders";
 import TrackOrder from "./TrackOrder";
+import UserInbox from "./UserInbox";
 import Address from "./Address";
 import { AiOutlineCamera } from "react-icons/ai";
 import { updateUserInformation } from "../../redux/actions/user";
@@ -221,6 +222,12 @@ const ProfileContent = ({ active }) => {
       {active === 4 && (
         <div>
           <AllRefundOrders />
+        </div>
+      )}
+      {/* / REFUNDS PAGE / */}
+      {active === 5 && (
+        <div>
+          <UserInbox />
         </div>
       )}
 

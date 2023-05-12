@@ -17,9 +17,12 @@ import {
   addToWishlist,
   removeFromWhislist,
 } from "../../redux/actions/wishlist";
+import axios from "axios";
+import server from "../../server";
 
 const ProductDetails = ({ data }) => {
   const { cart } = useSelector((state) => state.cart);
+  const { user, isAuthenticated } = useSelector((state) => state.user);
   const { allProducts } = useSelector((state) => state.products);
   const { wishlist } = useSelector((state) => state.wishlist || []);
   const { id } = useParams();
@@ -82,8 +85,27 @@ const ProductDetails = ({ data }) => {
     toast.success(`Item removed from wishlist successfully!`);
   };
 
-  const handleMessageSubmit = () => {
-    navigate("/inbox?conversation=507ebjver884ehfdjeriv84");
+  const handleMessageSubmit = async () => {
+    if (isAuthenticated) {
+      const groupTitle = data._id + user._id;
+      const userId = user._id;
+      const sellerId = data.shop._id;
+
+      await axios
+        .post(`${server}/conversation/create-conversation`, {
+          groupTitle,
+          userId,
+          sellerId,
+        })
+        .then((res) => {
+          navigate(`/conversation/${res.data.conversation._id}`);
+        })
+        .catch((error) => {
+          toast.error(error.response.data.message);
+        });
+    } else {
+      toast.error("Please login to send message!");
+    }
   };
 
   return (

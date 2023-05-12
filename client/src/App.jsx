@@ -34,6 +34,7 @@ import ShopRefunds from "./pages/shop/ShopRefunds";
 import ShopDashboardHome from "./pages/shop/ShopDashboardHome";
 import ShopSettingsPage from "./pages/shop/ShopSettingsPage";
 import ShopWithdrawMoney from "./pages/shop/ShopWithdrawMoney";
+import ShopInbox from "./pages/shop/ShopInbox";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import ProtectedRoute from "./routes/ProtectedRoute";
@@ -190,6 +191,7 @@ function App() {
             path="/dashboard/withdraw-money"
             element={<ShopWithdrawMoney />}
           />
+          <Route path="/dashboard/messages" element={<ShopInbox />} />
         </Route>
       </Routes>
       <ToastContainer

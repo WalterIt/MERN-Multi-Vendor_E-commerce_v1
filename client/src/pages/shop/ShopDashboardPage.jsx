@@ -31,6 +31,9 @@ const ShopDashboardPage = () => {
       case "/dashboard/withdraw-money":
         setActive(7);
         break;
+      case "/dashboard/messages":
+        setActive(8);
+        break;
       case "/dashboard/coupons":
         setActive(9);
         break;
