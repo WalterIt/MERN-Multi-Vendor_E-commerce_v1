@@ -40,6 +40,7 @@ const productSchema = new mongoose.Schema(
         rating: { type: Number },
         comment: { type: String },
         productId: { type: String },
+        createdAt: { type: Date, default: Date.now() },
       },
     ],
     ratings: {

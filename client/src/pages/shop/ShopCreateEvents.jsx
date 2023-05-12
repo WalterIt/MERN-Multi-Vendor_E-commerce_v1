@@ -13,12 +13,12 @@ import {
 import app from "../../firebase";
 import { createProduct } from "../../redux/actions/product";
 import { useEffect } from "react";
-import { createEvent } from "../../redux/actions/event";
+import { createEvent, getAllEventsShop } from "../../redux/actions/event";
 
 const ShopCreateEvents = () => {
-  const { user } = useSelector((state) => state.seller);
-  const seller = user;
+  const { seller } = useSelector((state) => state.seller);
   const { success, error } = useSelector((state) => state.events);
+  const { events } = useSelector((state) => state.events);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [images, setImages] = useState([]);
@@ -43,8 +43,6 @@ const ShopCreateEvents = () => {
       10
     );
   };
-
-  const handleEndDateChange = (e) => {};
 
   const minEndDate = startDate
     ? new Date(startDate.getTime() + 3 * 24 * 60 * 60 * 1000)
@@ -91,6 +89,8 @@ const ShopCreateEvents = () => {
 
     if (error) toast.error(error);
     if (success) {
+      dispatch(getAllEventsShop(seller._id));
+
       toast.success("Event created Successfully!");
       navigate("/dashboard/events");
     }
@@ -277,7 +277,8 @@ const ShopCreateEvents = () => {
               <input
                 type="submit"
                 value="Add Event Product"
-                className="mt-2 appearance-none bg-black text-white font-bold tracking-widest block w-full mb-3 px-3 h-9 border border-gray-300 rounded placeholder-gray-400 focus:outline-none focus:ring-blue-500 sm:text-sm cursor-pointer "
+                className="mt-2 appearance-none bg-black text-white font-bold tracking-widest block w-full mb-3 px-3 h-9 border border-gray-300 rounded placeholder-gray-400 focus:outline-none focus:ring-blue-500 sm:text-sm cursor-pointer hover:scale-105 "
+                // onClick={(e) => handleSubmit()}
               />
             </div>
           </div>

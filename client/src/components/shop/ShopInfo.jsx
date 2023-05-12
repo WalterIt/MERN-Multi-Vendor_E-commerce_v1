@@ -46,6 +46,20 @@ const ShopInfo = ({ isOwner }) => {
 
   // console.log(data);
 
+  const totalReviewsLength =
+    allProducts &&
+    allProducts?.reduce((acc, product) => acc + product.reviews.length, 0);
+
+  const totalRatings =
+    allProducts &&
+    allProducts?.reduce(
+      (acc, product) =>
+        acc + product.reviews.reduce((sum, review) => sum + review.rating, 0),
+      0
+    );
+
+  const averageRating = totalRatings / totalReviewsLength || 0;
+
   return (
     <div className="">
       <div className="w-full h-auto py-5 px-2">
@@ -79,7 +93,7 @@ const ShopInfo = ({ isOwner }) => {
 
       <div className="p-4">
         <h5 className="font-[600] ">Shop Ratings</h5>
-        <h4 className="text-[#000000a6]">4/5</h4>
+        <h4 className="text-[#000000a6]">{averageRating}/5</h4>
       </div>
 
       <div className="p-4">

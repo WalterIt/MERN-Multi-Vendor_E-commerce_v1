@@ -106,7 +106,7 @@ const ShopSettings = () => {
 
   return (
     <div className="w-full min-h-screen flex flex-col items-center">
-      <div className="flex w-full 800px:w-[80%] flex-col justify-center my-5">
+      <div className="flex w-full 800px:w-[100%] flex-col justify-center my-5">
         {/* shop info */}
         <form
           aria-aria-required={true}
@@ -145,7 +145,7 @@ const ShopSettings = () => {
             </div>
           </div>
 
-          <div className="w-[100%] flex items-center flex-col 800px:w-[50%] mt-5">
+          <div className="w-[100%] flex items-center flex-col 800px:w-[70%] mt-5">
             <div className="w-full pl-[3%]">
               <label className="block pb-2">Shop Name</label>
             </div>
@@ -158,7 +158,7 @@ const ShopSettings = () => {
               required
             />
           </div>
-          <div className="w-[100%] flex items-center flex-col 800px:w-[50%] mt-5">
+          <div className="w-[100%] flex items-center flex-col 800px:w-[66%] mt-5">
             <div className="w-full pl-[3%]">
               <label className="block pb-2">Shop description</label>
             </div>
@@ -176,7 +176,7 @@ const ShopSettings = () => {
               className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             ></textarea>
           </div>
-          <div className="w-[100%] flex items-center flex-col 800px:w-[50%] mt-5">
+          <div className="w-[100%] flex items-center flex-col 800px:w-[70%] mt-5">
             <div className="w-full pl-[3%]">
               <label className="block pb-2">Shop Address</label>
             </div>
@@ -190,7 +190,7 @@ const ShopSettings = () => {
             />
           </div>
 
-          <div className="w-[100%] flex items-center flex-col 800px:w-[50%] mt-5">
+          <div className="w-[100%] flex items-center flex-col 800px:w-[70%] mt-5">
             <div className="w-full pl-[3%]">
               <label className="block pb-2">Shop Phone Number</label>
             </div>
@@ -204,7 +204,7 @@ const ShopSettings = () => {
             />
           </div>
 
-          <div className="w-[100%] flex items-center flex-col 800px:w-[50%] mt-5">
+          <div className="w-[100%] flex items-center flex-col 800px:w-[70%] mt-5">
             <div className="w-full pl-[3%]">
               <label className="block pb-2">Shop Zip Code</label>
             </div>
@@ -218,7 +218,7 @@ const ShopSettings = () => {
             />
           </div>
 
-          <div className="w-[100%] flex items-center flex-col 800px:w-[50%] mt-5">
+          <div className="w-[100%] flex items-center flex-col 800px:w-[70%] mt-5">
             <input
               type="submit"
               value="Update Shop"

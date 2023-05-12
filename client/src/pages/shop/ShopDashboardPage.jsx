@@ -28,6 +28,9 @@ const ShopDashboardPage = () => {
       case "/dashboard/create-event":
         setActive(6);
         break;
+      case "/dashboard/withdraw-money":
+        setActive(7);
+        break;
       case "/dashboard/coupons":
         setActive(9);
         break;

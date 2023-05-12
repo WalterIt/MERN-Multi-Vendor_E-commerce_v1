@@ -11,7 +11,7 @@ const ShopSettingsPage = () => {
           <div className="w-[25%] bg-white rounded shadow-sm  h-auto sticky top-10 left-0 z-10 ">
             <ShopInfo isOwner={true} />
           </div>
-          <div className="w-[72%] rounded ">
+          <div className="w-[75%] rounded ">
             <ShopSettings />
             {/* <ShopProfileData isOwner={true} /> */}
           </div>
