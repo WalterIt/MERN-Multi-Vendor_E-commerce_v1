@@ -35,6 +35,8 @@ import ShopDashboardHome from "./pages/shop/ShopDashboardHome";
 import ShopSettingsPage from "./pages/shop/ShopSettingsPage";
 import ShopWithdrawMoney from "./pages/shop/ShopWithdrawMoney";
 import ShopInbox from "./pages/shop/ShopInbox";
+import AdminDashboardLayout from "./pages/admin/AdminDashboardLayout";
+import AdminHome from "./pages/admin/AdminHome";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import ProtectedRoute from "./routes/ProtectedRoute";
@@ -48,10 +50,11 @@ import server from "./server";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import TrackOrder from "./components/profile/TrackOrder";
+import ProtectedAdminRoute from "./routes/ProtectedAdminRoute";
 axios.defaults.withCredentials = true;
 
 function App() {
-  const { isAuthenticated, loading } = useSelector(
+  const { user, isAuthenticated, loading } = useSelector(
     (state) => state?.user || {}
   );
   const [stripeApikey, setStripeApiKey] = useState("");
@@ -165,6 +168,7 @@ function App() {
           }
         />
 
+        {/* SHOPDASHBOARD ROUTES  */}
         <Route
           element={
             <SellerProtectedRoute>
@@ -192,6 +196,19 @@ function App() {
             element={<ShopWithdrawMoney />}
           />
           <Route path="/dashboard/messages" element={<ShopInbox />} />
+        </Route>
+
+        {/* ADMIN ROUTES  */}
+        <Route
+          element={
+            user?.role !== "Admin" ? (
+              <Navigate to="/" />
+            ) : (
+              <AdminDashboardLayout />
+            )
+          }
+        >
+          <Route path="/admin" element={<AdminHome />} />
         </Route>
       </Routes>
       <ToastContainer
