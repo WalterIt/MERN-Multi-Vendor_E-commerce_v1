@@ -56,7 +56,7 @@ const AdminUsers = () => {
 
     {
       field: "joinedAt",
-      headerName: "joinedAt",
+      headerName: "Joined At",
       type: "text",
       minWidth: 130,
       flex: 0.5,

@@ -39,6 +39,7 @@ import AdminDashboardLayout from "./pages/admin/AdminDashboardLayout";
 import AdminHome from "./pages/admin/AdminHome";
 import AdminUsers from "./pages/admin/AdminUsers";
 import AdminSellers from "./pages/admin/AdminSellers";
+import AdminOrders from "./pages/admin/AdminOrders";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import ProtectedRoute from "./routes/ProtectedRoute";
@@ -212,6 +213,7 @@ function App() {
         >
           <Route path="/admin" element={<AdminHome />} />
           <Route path="/admin/sellers" element={<AdminSellers />} />
+          <Route path="/admin/orders" element={<AdminOrders />} />
           <Route path="/admin/users" element={<AdminUsers />} />
         </Route>
       </Routes>
