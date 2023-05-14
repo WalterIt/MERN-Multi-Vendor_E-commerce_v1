@@ -57,7 +57,10 @@ const AdminOrders = () => {
       row.push({
         id: item._id,
         itemsQty: item?.cart?.reduce((acc, item) => acc + item.quantity, 0),
-        total: item?.totalPrice + " $",
+        total: new Intl.NumberFormat("en-US", {
+          style: "currency",
+          currency: "USD",
+        }).format(item?.totalPrice),
         status: item?.status,
         createdAt: item?.createdAt.slice(0, 10),
       });

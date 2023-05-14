@@ -13,6 +13,7 @@ const sendToken = require("../utils/jwtToken");
 const {
   isSellerAuthenticated,
   isAuthenticated,
+  isAdminAuthenticated,
 } = require("../middleware/auth");
 const sendShopToken = require("../utils/ShopToken");
 const Shop = require("../model/shop.js");
@@ -145,6 +146,26 @@ router.put(
       res.status(200).json({ success: true, message: "Reviewed successfully" });
     } catch (error) {
       return next(new ErrorHandler(error.message, 400));
+    }
+  })
+);
+
+// all products --- for admin
+router.get(
+  "/admin-all-products",
+  isAuthenticated,
+  isAdminAuthenticated("Admin"),
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const products = await Product.find().sort({
+        createdAt: -1,
+      });
+      res.status(201).json({
+        success: true,
+        products,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
     }
   })
 );
