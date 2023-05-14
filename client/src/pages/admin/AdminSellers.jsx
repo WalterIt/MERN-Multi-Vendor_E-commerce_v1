@@ -1,37 +1,38 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllUsers } from "../../redux/actions/user";
 import { DataGrid } from "@mui/x-data-grid";
 import { Button } from "@mui/material";
-import { AiOutlineDelete } from "react-icons/ai";
+import { AiOutlineDelete, AiOutlineEye } from "react-icons/ai";
 import styles from "../../styles/styles";
 import { RxCross1 } from "react-icons/rx";
 import axios from "axios";
 import { server } from "../../server";
 import { toast } from "react-toastify";
+import { getAllSellers } from "../../redux/actions/seller";
+import { Link } from "react-router-dom";
 
-const AdminUsers = () => {
+const AdminSellers = () => {
   const dispatch = useDispatch();
-  const { users } = useSelector((state) => state.user);
+  const { sellers } = useSelector((state) => state.seller);
   const [open, setOpen] = useState(false);
   const [userId, setUserId] = useState("");
 
   useEffect(() => {
-    dispatch(getAllUsers());
+    dispatch(getAllSellers());
   }, [dispatch]);
 
   const handleDelete = async (id) => {
     await axios
-      .delete(`${server}/user/delete-user/${id}`, { withCredentials: true })
+      .delete(`${server}/shop/delete-seller/${id}`, { withCredentials: true })
       .then((res) => {
         toast.success(res.data.message);
       });
 
-    dispatch(getAllUsers());
+    dispatch(getAllSellers());
   };
 
   const columns = [
-    { field: "id", headerName: "User ID", minWidth: 220, flex: 0.7 },
+    { field: "id", headerName: "Seller ID", minWidth: 220, flex: 0.7 },
 
     {
       field: "name",
@@ -43,30 +44,48 @@ const AdminUsers = () => {
       field: "email",
       headerName: "Email",
       type: "text",
-      minWidth: 240,
-      flex: 1,
+      minWidth: 220,
+      flex: 0.7,
     },
     {
-      field: "role",
-      headerName: "User Role",
+      field: "address",
+      headerName: "Seller Address",
       type: "text",
-      minWidth: 80,
-      flex: 0.3,
+      minWidth: 230,
+      flex: 0.7,
     },
 
     {
       field: "joinedAt",
-      headerName: "joinedAt",
+      headerName: "Joined At",
       type: "text",
-      minWidth: 130,
+      minWidth: 100,
       flex: 0.5,
     },
-
+    {
+      field: "  ",
+      flex: 0.3,
+      minWidth: 50,
+      headerName: "Preview",
+      type: "number",
+      sortable: false,
+      renderCell: (params) => {
+        return (
+          <>
+            <Link to={`/shop/preview/${params.id}`}>
+              <Button>
+                <AiOutlineEye size={20} />
+              </Button>
+            </Link>
+          </>
+        );
+      },
+    },
     {
       field: " ",
-      flex: 0.5,
-      minWidth: 120,
-      headerName: "Delete User",
+      flex: 0.3,
+      minWidth: 50,
+      headerName: "Delete",
       type: "number",
       sortable: false,
       renderCell: (params) => {
@@ -82,14 +101,14 @@ const AdminUsers = () => {
   ];
 
   const row = [];
-  users &&
-    users.forEach((user) => {
+  sellers &&
+    sellers.forEach((item) => {
       row.push({
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-        joinedAt: user.createdAt.slice(0, 10),
+        id: item._id,
+        name: item?.name,
+        email: item?.email,
+        joinedAt: item.createdAt.slice(0, 10),
+        address: item.address,
       });
     });
 
@@ -117,13 +136,13 @@ const AdminUsers = () => {
               </h3>
               <div className="w-full flex items-center justify-center">
                 <div
-                  className={`${styles.button} text-white text-[18px] hover:scale-105 !h-[42px] mr-4`}
+                  className={`${styles.button} text-white text-[18px] !h-[42px] mr-4`}
                   onClick={() => setOpen(false)}
                 >
                   cancel
                 </div>
                 <div
-                  className={`${styles.button} text-white text-[18px] hover:scale-105 !h-[42px] ml-4`}
+                  className={`${styles.button} text-white text-[18px] !h-[42px] ml-4`}
                   onClick={() => setOpen(false) || handleDelete(userId)}
                 >
                   confirm
@@ -137,4 +156,4 @@ const AdminUsers = () => {
   );
 };
 
-export default AdminUsers;
+export default AdminSellers;
