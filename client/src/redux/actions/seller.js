@@ -42,3 +42,24 @@ export const loadSeller = () => async (dispatch) => {
     });
   }
 };
+
+// get all sellers --- admin
+export const getAllSellers = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: "getAllSellersRequest",
+    });
+
+    const { data } = await axios.get(`${server}/shop/admin-all-sellers`);
+
+    dispatch({
+      type: "getAllSellersSuccess",
+      payload: data.sellers,
+    });
+  } catch (error) {
+    dispatch({
+      type: "getAllSellerFailure",
+      //   payload: error.response.data.message,
+    });
+  }
+};

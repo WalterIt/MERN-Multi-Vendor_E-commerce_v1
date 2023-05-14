@@ -7,6 +7,7 @@ const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const {
   isAuthenticated,
   isSellerAuthenticated,
+  isAdminAuthenticated,
 } = require("../middleware/auth");
 const Product = require("../model/product");
 
@@ -195,6 +196,28 @@ router.put(
       res.status(200).json({
         success: true,
         message: "Order Refunded Successfully!",
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
+
+// Create get all Order of a admin
+router.get(
+  "/admin-all-orders",
+  isAuthenticated,
+  isAdminAuthenticated("Admin"),
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const orders = await Order.find().sort({
+        deliveredAt: -1,
+        createdAt: -1,
+      });
+
+      res.status(200).json({
+        success: true,
+        orders,
       });
     } catch (error) {
       return next(new ErrorHandler(error.message, 500));

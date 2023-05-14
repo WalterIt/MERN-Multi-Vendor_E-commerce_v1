@@ -43,24 +43,23 @@ export const getAllOrdersShop = (shopId) => async (dispatch) => {
   }
 };
 
-// // Delete a product of Shop
-// export const deleteProductShop = (id) => async (dispatch) => {
-//   try {
-//     dispatch({
-//       type: "deleteProductShopRequest",
-//     });
-//     const { data } = await axios.delete(
-//       `${server}/product/delete-shop-product/${id}`
-//     );
+// get all orders of Admin
+export const getAllAdminOrders = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: "adminAllOrdersRequest",
+    });
 
-//     dispatch({
-//       type: "deleteProductShopSuccess",
-//       payload: data?.message,
-//     });
-//   } catch (error) {
-//     dispatch({
-//       type: "deleteProductShopFailure",
-//       payload: error.response?.data?.message,
-//     });
-//   }
-// };
+    const { data } = await axios.get(`${server}/order/admin-all-orders`);
+
+    dispatch({
+      type: "adminAllOrdersSuccess",
+      payload: data.orders,
+    });
+  } catch (error) {
+    dispatch({
+      type: "adminAllOrdersFailure",
+      payload: error.response?.data?.message,
+    });
+  }
+};

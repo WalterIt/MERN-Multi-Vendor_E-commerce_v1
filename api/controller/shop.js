@@ -9,7 +9,11 @@ const fs = require("fs");
 const jwt = require("jsonwebtoken");
 const sendMail = require("../utils/sendMail");
 const sendToken = require("../utils/jwtToken");
-const { isSellerAuthenticated } = require("../middleware/auth");
+const {
+  isSellerAuthenticated,
+  isAdminAuthenticated,
+  isAuthenticated,
+} = require("../middleware/auth");
 const sendShopToken = require("../utils/ShopToken");
 
 router.post("/create-shop", upload.single("file"), async (req, res, next) => {
@@ -251,6 +255,26 @@ router.put(
       res.status(201).json({
         success: true,
         seller,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
+
+// all sellers --- for admin
+router.get(
+  "/admin-all-sellers",
+  isAuthenticated,
+  isAdminAuthenticated("Admin"),
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const sellers = await Shop.find().sort({
+        createdAt: -1,
+      });
+      res.status(201).json({
+        success: true,
+        sellers,
       });
     } catch (error) {
       return next(new ErrorHandler(error.message, 500));

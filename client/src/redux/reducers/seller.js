@@ -34,6 +34,18 @@ export const sellerReducer = createReducer(initialState, {
     state.isLoading = false;
     state.error = action?.payload;
   },
+  // get all sellers ---admin
+  getAllSellersRequest: (state) => {
+    state.isLoading = true;
+  },
+  getAllSellersSuccess: (state, action) => {
+    state.isLoading = false;
+    state.sellers = action.payload;
+  },
+  getAllSellerFailure: (state, action) => {
+    state.isLoading = false;
+    state.error = action.payload;
+  },
   ClearErrors: (state) => {
     state.error = null;
   },
