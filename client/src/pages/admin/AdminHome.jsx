@@ -15,7 +15,6 @@ const AdminHome = () => {
     (state) => state.order
   );
   const { sellers } = useSelector((state) => state.seller);
-  console.log(sellers);
 
   useEffect(() => {
     dispatch(getAllAdminOrders());

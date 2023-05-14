@@ -37,6 +37,7 @@ import ShopWithdrawMoney from "./pages/shop/ShopWithdrawMoney";
 import ShopInbox from "./pages/shop/ShopInbox";
 import AdminDashboardLayout from "./pages/admin/AdminDashboardLayout";
 import AdminHome from "./pages/admin/AdminHome";
+import AdminUsers from "./pages/admin/AdminUsers";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import ProtectedRoute from "./routes/ProtectedRoute";
@@ -201,14 +202,15 @@ function App() {
         {/* ADMIN ROUTES  */}
         <Route
           element={
-            user?.role !== "Admin" ? (
-              <Navigate to="/" />
+            user?.role === "Admin" ? (
+              <Navigate to="/admin" /> && <AdminDashboardLayout />
             ) : (
-              <AdminDashboardLayout />
+              <Navigate to="/" />
             )
           }
         >
           <Route path="/admin" element={<AdminHome />} />
+          <Route path="/admin/users" element={<AdminUsers />} />
         </Route>
       </Routes>
       <ToastContainer
