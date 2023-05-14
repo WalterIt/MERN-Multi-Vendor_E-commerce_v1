@@ -2,7 +2,11 @@ const express = require("express");
 const router = express.Router();
 const ErrorHandler = require("../utils/ErrorHandler");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
-const { isSellerAuthenticated } = require("../middleware/auth");
+const {
+  isSellerAuthenticated,
+  isAdminAuthenticated,
+  isAuthenticated,
+} = require("../middleware/auth");
 const Shop = require("../model/shop.js");
 const Event = require("../model/event");
 
@@ -81,6 +85,26 @@ router.delete(
       });
     } catch (error) {
       return next(new ErrorHandler(error.message, 400));
+    }
+  })
+);
+
+// all events --- for admin
+router.get(
+  "/admin-all-events",
+  isAuthenticated,
+  isAdminAuthenticated("Admin"),
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const events = await Event.find().sort({
+        createdAt: -1,
+      });
+      res.status(201).json({
+        success: true,
+        events,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
     }
   })
 );
